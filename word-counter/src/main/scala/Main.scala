@@ -10,12 +10,11 @@ object Main {
         UserOption
           .fromString(userOption)
           .fold(println(s"unrecognized option: $userOption")) { userOption =>
-            val counter = Counter.fromUserOption(userOption)
-            val filePath = Path of fileName
-            Try(Files.readString(filePath))
+            val counter = Counter fromUserOption userOption
+            Try(Files readString (Path of fileName))
               .fold(
                 throwable => println(s"failed due to ${throwable.getMessage}"),
-                input => println(counter.count(input).str),
+                input => println((counter count input).str),
               )
           }
 

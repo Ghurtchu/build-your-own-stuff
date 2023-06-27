@@ -1,8 +1,8 @@
-final case class CountResult private (userOption: UserOption, amount: BigInt) {
+sealed abstract case class CountResult private (userOption: UserOption, amount: BigInt) {
   override def toString: String =
-    s"$amount $userOption$getPluralPostfixIfPresent"
+    s"$amount $userOption$maybePluralPostfix"
 
-  private def getPluralPostfixIfPresent: String =
+  private def maybePluralPostfix: String =
     if (amount == 1) "" else "s"
 }
 
@@ -11,5 +11,5 @@ object CountResult {
     userOption: UserOption,
     amount: BigInt,
   ): Option[CountResult] =
-    Option.when(amount >= 0)(new CountResult(userOption, amount))
+    Option.when(amount >= 0)(new CountResult(userOption, amount) {})
 }
