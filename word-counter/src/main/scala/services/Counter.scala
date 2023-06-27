@@ -1,23 +1,23 @@
 package services
 
-import domain.{Amount, CmdOption, CountResult}
+import domain.{Amount, Command, CountResult}
 
 trait Counter {
   def count(input: String): CountResult
 }
 
 object Counter {
-  def fromUserOption(cmdOption: CmdOption): Counter = (input: String) =>
+  def fromCommand(command: Command): Counter = (input: String) =>
     CountResult(
-      cmdOption = cmdOption,
-      amount = Amount fromBigInt defineAmount(cmdOption, input) getOrElse Amount.empty,
+      command = command,
+      amount = Amount fromBigInt defineAmount(command, input) getOrElse Amount.empty,
     )
 
-  private def defineAmount(cmdOption: CmdOption, input: String): BigInt =
-    cmdOption match {
-      case CmdOption.Byte => input.getBytes.sum
-      case CmdOption.Character => input.length
-      case CmdOption.Word => (input split " ").length
-      case CmdOption.Line => (input split "\n").length
+  private def defineAmount(command: Command, input: String): BigInt =
+    command match {
+      case Command.Byte => input.getBytes.sum
+      case Command.Character => input.length
+      case Command.Word => (input split " ").length
+      case Command.Line => (input split "\n").length
     }
 }
