@@ -6,3 +6,5 @@ lazy val root = (project in file("."))
   .settings(
     name := "word-counter"
   )
+
+libraryDependencies += Dependencies.Testing.Munit
