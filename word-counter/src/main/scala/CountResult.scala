@@ -1,6 +1,9 @@
 final case class CountResult private (userOption: UserOption, amount: BigInt) {
   override def toString: String =
-    s"$amount ${if (amount == 1) userOption else userOption + "s"}"
+    s"$amount $userOption$getPluralPostfixIfPresent"
+
+  private def getPluralPostfixIfPresent: String =
+    if (amount == 1) "" else "s"
 }
 
 object CountResult {
