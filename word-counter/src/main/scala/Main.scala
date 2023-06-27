@@ -18,11 +18,7 @@ object Main {
                 input => println((Counter fromCommand command) count input),
               )
           }
-      case Cat :: fileName :: Pipe :: executableName :: cmdOption :: Nil => ???
-      case _ => println("Incorrect usage, please check manual")
+      case "cat" :: fileName :: "|" :: executableName :: command :: Nil => ???
+      case _ => println("Incorrect usage, please refer to manual")
     }
-
-  private val Pipe = "|"
-  private val Cat = "cat"
-
 }
