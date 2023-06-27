@@ -9,21 +9,19 @@ object Main {
       case s"-$userOption" :: fileName :: Nil =>
         UserOption
           .fromString(userOption)
-          .fold(println(s"unrecognized option: $userOption")) { userOption =>
-            val counter = Counter fromUserOption userOption
+          .fold(s"unrecognized option: $userOption".log) { userOption =>
             Try(Files readString (Path of fileName))
               .fold(
-                throwable => println(s"failed due to ${throwable.getMessage}"),
-                input => println((counter count input).str),
+                error => s"failed due to ${error.getMessage}".log,
+                input => ((Counter fromUserOption userOption) count input).str.log,
               )
           }
 
-      case Cat :: fileName :: Pipe :: programName :: userOption :: Nil => ???
+      case Cat :: fileName :: Pipe :: executableName :: userOption :: Nil => ???
       case _ => println("Incorrect usage, please check manual")
     }
 
   private val Pipe = "|"
   private val Cat = "cat"
-  private val Hyphen = "-"
 
 }

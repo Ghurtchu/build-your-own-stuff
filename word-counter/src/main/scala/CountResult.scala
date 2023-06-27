@@ -3,7 +3,7 @@ sealed abstract case class CountResult private (userOption: UserOption, amount: 
     s"$amount $userOption$maybePluralPostfix"
 
   private def maybePluralPostfix: String =
-    if (amount == 1) "" else "s"
+    if (amount > 1) "s" else ""
 }
 
 object CountResult {
