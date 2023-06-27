@@ -3,7 +3,7 @@ trait Counter {
 }
 
 object Counter {
-  def apply(userOption: UserOption): Counter = (input: String) =>
+  def fromUserOption(userOption: UserOption): Counter = (input: String) =>
     CountResult(
       userOption = userOption,
       amount = userOption match {

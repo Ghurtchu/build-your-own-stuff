@@ -1,4 +1,7 @@
-sealed trait UserOption
+sealed trait UserOption {
+  override def toString: String =
+    getClass.getSimpleName.init.toLowerCase
+}
 
 object UserOption {
   case object Byte extends UserOption

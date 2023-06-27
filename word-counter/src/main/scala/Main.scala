@@ -1,4 +1,6 @@
 import java.nio.file.{Files, Path}
+import Syntax._
+import scala.util.Try
 
 object Main {
 
@@ -7,17 +9,18 @@ object Main {
       case s"-$userOption" :: fileName :: Nil =>
         UserOption
           .fromString(userOption)
-          .fold(println(s"unrecognized option: $userOption")) { option =>
-            val counter = Counter.apply(option)
-            val input = Files.readString(Path.of(fileName))
-            val result = counter.count(input)
-
-            println(result)
+          .fold(println(s"unrecognized option: $userOption")) { userOption =>
+            val counter = Counter.fromUserOption(userOption)
+            val filePath = Path of fileName
+            Try(Files.readString(filePath))
+              .fold(
+                throwable => println(s"failed due to ${throwable.getMessage}"),
+                input => println(counter.count(input).str),
+              )
           }
 
-      case Cat :: fileName :: Pipe :: programName :: userOption :: Nil =>
-        ???
-      case _ => println("Incorrect usage")
+      case Cat :: fileName :: Pipe :: programName :: userOption :: Nil => ???
+      case _ => println("Incorrect usage, please check manual")
     }
 
   private val Pipe = "|"
