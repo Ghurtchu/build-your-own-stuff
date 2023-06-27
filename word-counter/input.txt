@@ -1,4 +1,4 @@
-The Project Gutenberg eBook of The Art of War, by Sun Tzŭ
+﻿The Project Gutenberg eBook of The Art of War, by Sun Tzŭ
 
 This eBook is for the use of anyone anywhere in the United States and
 most other parts of the world at no cost and with almost no restrictions
@@ -697,7 +697,7 @@ humiliation of 506. At this point, a table of dates may be found
 useful.
 
 
-B.C.
+B.C.	
 514	Accession of Ho Lu.
 512	Ho Lu attacks Ch’u, but is dissuaded from entering Ying,
 the capital. Shih Chi mentions Sun Wu as general.
@@ -7134,3 +7134,4 @@ This website includes information about Project Gutenberg-tm,
 including how to make donations to the Project Gutenberg Literary
 Archive Foundation, how to help produce our new eBooks, and how to
 subscribe to our email newsletter to hear about new eBooks.
+

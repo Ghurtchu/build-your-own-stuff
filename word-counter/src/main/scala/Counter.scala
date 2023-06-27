@@ -1,5 +1,5 @@
 trait Counter {
-  def apply(input: String): Option[CountResult]
+  def count(input: String): Option[CountResult]
 }
 
 object Counter {
@@ -8,7 +8,7 @@ object Counter {
       userOption = userOption,
       amount = userOption match {
         case UserOption.Byte => input.getBytes.sum
-        case UserOption.Character => input.split(" ").map(_.length).sum
+        case UserOption.Character => input.length
         case UserOption.Word => input.split(" ").length
         case UserOption.Line => input.split("\n").length
       },
