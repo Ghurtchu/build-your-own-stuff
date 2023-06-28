@@ -11,11 +11,10 @@ object Command {
   case object Word extends Command
   case object Line extends Command
 
-  def fromString: String => Option[Command] = {
-    case "c" => Some(Byte)
-    case "m" => Some(Character)
-    case "w" => Some(Word)
-    case "l" => Some(Line)
-    case _ => None
+  def fromString: String => Option[Command] = PartialFunction.condOpt(_) {
+    case "c" => Byte
+    case "m" => Character
+    case "w" => Word
+    case "l" => Line
   }
 }
