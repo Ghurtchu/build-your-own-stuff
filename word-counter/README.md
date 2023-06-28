@@ -7,7 +7,7 @@ Setting up and testing:
  - cd to home: `cd ~`
  - clone the repo
  - run: `vim scalawc`
- - paste the following inside scalawc:
+ - paste the following three lines inside scalawc:
 
 `#!/bin/sh`
 
