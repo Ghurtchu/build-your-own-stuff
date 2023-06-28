@@ -10,11 +10,17 @@ object Main {
   def main(args: Array[String]): Unit =
     args.toList match {
       case s"-$cmd" :: filename :: Nil =>
-        parseCmdAndThenCountWords(cmd, tryReadFile(filename))
+        parseCmdAndThenCountWords(
+          cmd,
+          readInputFromFile(filename),
+        )
       case s"-$cmd" :: Nil =>
-        parseCmdAndThenCountWords(cmd, tryReadStdIn)
+        parseCmdAndThenCountWords(
+          cmd,
+          readInputFromConsole,
+        )
       case filename :: Nil =>
-        tryReadFile(filename)
+        readInputFromFile(filename)
           .fold(
             println,
             input => {
@@ -35,10 +41,10 @@ object Main {
             input => println(countWords(cmd, input)),
           )
       }
-  private def tryReadFile(fileName: String): Try[String] =
+  private def readInputFromFile(fileName: String): Try[String] =
     Try(Files readString (Path of fileName))
 
-  private def tryReadStdIn: Try[String] =
+  private def readInputFromConsole: Try[String] =
     Try(scala.io.Source.stdin.getLines().mkString("\n"))
 
   private def countWords(command: Command, input: String): CountResult =
