@@ -11,7 +11,7 @@ Setting up and testing:
 
 `#!/bin/sh`
 
-`cd /Users/aghurtchumelia/Personal/build-your-own-stuff/word-counter/target/scala-2.13/ scala scalawc.jar $1 $2`
+`cd ~/build-your-own-stuff/word-counter/target/scala-2.13/ scala scalawc.jar $1 $2`
 
 `scala scalawc.jar $1 $2`
 
