@@ -1,3 +1,4 @@
+import domain.Command.DefaultCommands
 import domain.{Command, CountResult}
 import services.Counter
 
@@ -13,12 +14,15 @@ object Main {
       case s"-$cmd" :: Nil =>
         parseCmdAndThenCountWords(cmd, tryReadStdIn)
       case filename :: Nil =>
-        val cmds = List(Command.Line, Command.Word, Command.Byte)
-        val inputTry = tryReadFile(filename)
-        val countResults = cmds flatMap { cmd =>
-          inputTry.map(countWords(cmd, _)).toOption
-        }
-        println((countResults.map(_.amount.toString) :+ filename) mkString "\t")
+        tryReadFile(filename)
+          .fold(
+            println,
+            input => {
+              val countResults = DefaultCommands map (countWords(_, input))
+
+              println((countResults.map(_.amount.toString) :+ filename) mkString "\t")
+            },
+          )
       case _ => println("Incorrect usage, please refer to manual")
     }
 
@@ -27,7 +31,7 @@ object Main {
       .fold(println(s"unrecognized command: $command")) { cmd =>
         readInput
           .fold(
-            _.printStackTrace(),
+            println,
             input => println(countWords(cmd, input)),
           )
       }

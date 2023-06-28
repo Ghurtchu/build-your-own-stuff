@@ -11,6 +11,8 @@ object Command {
   case object Word extends Command
   case object Line extends Command
 
+  val DefaultCommands = List(Command.Line, Command.Word, Command.Byte)
+
   def fromString: String => Option[Command] = PartialFunction.condOpt(_) {
     case "c" => Byte
     case "m" => Character
