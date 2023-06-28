@@ -9,9 +9,9 @@ object Main {
   def main(args: Array[String]): Unit =
     args.toList match {
       case s"-$cmd" :: filename :: Nil =>
-        parseCmdAndThenCount(cmd, tryReadFile(filename))
+        parseCmdAndThenCountWords(cmd, tryReadFile(filename))
       case s"-$cmd" :: Nil =>
-        parseCmdAndThenCount(cmd, tryReadStdIn)
+        parseCmdAndThenCountWords(cmd, tryReadStdIn)
       case filename :: Nil =>
         val cmds = List(Command.Line, Command.Word, Command.Byte)
         val inputTry = tryReadFile(filename)
@@ -22,7 +22,7 @@ object Main {
       case _ => println("Incorrect usage, please refer to manual")
     }
 
-  private def parseCmdAndThenCount(command: String, readInput: => Try[String]): Unit =
+  private def parseCmdAndThenCountWords(command: String, readInput: => Try[String]): Unit =
     (Command fromString command)
       .fold(println(s"unrecognized command: $command")) { cmd =>
         readInput
