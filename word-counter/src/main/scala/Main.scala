@@ -9,24 +9,24 @@ object Main {
 
   def main(args: Array[String]): Unit =
     args.toList match {
-      case s"-$cmd" :: filename :: Nil =>
+      case s"-$cmd" :: filepath :: Nil =>
         parseCmdAndThenCountWords(
           cmd,
-          loadInputFromFile(filename),
+          loadInputFromFile(filepath),
         )
       case s"-$cmd" :: Nil =>
         parseCmdAndThenCountWords(
           cmd,
           loadInputFromConsole,
         )
-      case filename :: Nil =>
-        loadInputFromFile(filename)
+      case filepath :: Nil =>
+        loadInputFromFile(filepath)
           .fold(
             println,
             input => {
               val countResults = DefaultCommands map (countWords(_, input))
 
-              println((countResults.map(_.amount.toString) :+ filename) mkString "\t")
+              println((countResults.map(_.amount.toString) :+ filepath) mkString "\t")
             },
           )
       case _ => println("Incorrect usage, please refer to manual")
@@ -42,8 +42,8 @@ object Main {
           )
       }
 
-  private def loadInputFromFile(fileName: String): Try[String] =
-    Try(Files readString (Path of fileName))
+  private def loadInputFromFile(filepath: String): Try[String] =
+    Try(Files readString (Path of filepath))
 
   private def loadInputFromConsole: Try[String] =
     Try(scala.io.Source.stdin.getLines().mkString("\n"))
