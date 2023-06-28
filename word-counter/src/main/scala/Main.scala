@@ -32,15 +32,16 @@ object Main {
       case _ => println("Incorrect usage, please refer to manual")
     }
 
-  private def parseCmdAndThenCountWords(command: String, loadInput: => Try[String]): Unit =
-    (Command fromString command)
-      .fold(println(s"unrecognized command: $command")) { cmd =>
+  private def parseCmdAndThenCountWords(cmd: String, loadInput: => Try[String]): Unit =
+    (Command fromString cmd)
+      .fold(println(s"unrecognized command: $cmd")) { cmd =>
         loadInput
           .fold(
             println,
             input => println(countWords(cmd, input)),
           )
       }
+
   private def loadInputFromFile(fileName: String): Try[String] =
     Try(Files readString (Path of fileName))
 
