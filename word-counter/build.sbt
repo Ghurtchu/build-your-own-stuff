@@ -4,7 +4,8 @@ ThisBuild / scalaVersion := "2.13.11"
 
 lazy val root = (project in file("."))
   .settings(
-    name := "word-counter"
+    name := "word-counter",
+    libraryDependencies += Dependencies.Testing.Munit,
+    assembly / mainClass := Some("Main"),
+    assembly / assemblyJarName := "scalawc.jar",
   )
-
-libraryDependencies += Dependencies.Testing.Munit
