@@ -15,7 +15,7 @@ object ParseCmdAndThenCountWords {
 
   object Syntax {
     implicit class EitherOps(self: Either[Error, CountResult]) {
-      def run(): Unit = self.fold(err => println(err.msg), println)
+      def logResult(): Unit = self.fold(err => println(err.msg), println)
     }
   }
   sealed trait Error {
@@ -34,7 +34,7 @@ object ParseCmdAndThenCountWords {
     }
   }
 
-  def create: ParseCmdAndThenCountWords = (cmd, loadInput) =>
+  def of: ParseCmdAndThenCountWords = (cmd, loadInput) =>
     for {
       cmd <- (Command fromString cmd).toRight(UnknownCommand(cmd))
       input <- loadInput.toEither.left.map(_ => Unknown)

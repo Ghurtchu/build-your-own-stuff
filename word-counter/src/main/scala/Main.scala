@@ -1,3 +1,4 @@
+import services.LoadInputAndThenCountWords.Syntax.OptionOps
 import services.ParseCmdAndThenCountWords.Syntax.EitherOps
 import services.{LoadInputAndThenCountWords, ParseCmdAndThenCountWords}
 
@@ -11,15 +12,15 @@ object Main {
       case s"-$cmd" :: filepath :: Nil =>
         ParseCmdAndThenCountWords
           .ofFile(filepath)(cmd, loadInputFromFile(filepath))
-          .run()
+          .logResult()
       case s"-$cmd" :: Nil =>
         ParseCmdAndThenCountWords
-          .create(cmd, loadInputFromConsole)
-          .run()
+          .of(cmd, loadInputFromConsole)
+          .logResult()
       case filepath :: Nil =>
         LoadInputAndThenCountWords
-          .create(filepath, loadInputFromFile(filepath))
-          .fold(println(s"could not open file $filepath"))(println)
+          .of(filepath, loadInputFromFile(filepath))
+          .logResult()
       case _ => println("Incorrect usage, please refer to manual")
     }
 
