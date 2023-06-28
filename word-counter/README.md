@@ -14,7 +14,7 @@ Setting up and testing:
 `cd ~/build-your-own-stuff/word-counter/target/scala-2.13/`
 
 `scala scalawc.jar $1 $2`
-
+ - save and exit (I  hope you know to exit vim :smile:)
  - run the following commands for testing:
  - `./scalawc -c input.txt`
  - `./scalawc -m input.txt`
