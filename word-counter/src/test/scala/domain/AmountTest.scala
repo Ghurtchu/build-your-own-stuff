@@ -5,7 +5,7 @@ import munit.FunSuite
 class AmountTest extends FunSuite {
 
   test("positive amount should return Some(Amount(...))") {
-    assert(Amount.fromBigInt(2).isDefined)
+    assertEquals(Amount.fromBigInt(2), Some(Amount(2)))
   }
 
   test("negative amount should return None") {
