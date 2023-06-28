@@ -36,16 +36,23 @@ object ParseCmdAndThenCountWords {
 
   def of: ParseCmdAndThenCountWords = (cmd, loadInput) =>
     for {
-      cmd <- (Command fromString cmd).toRight(UnknownCommand(cmd))
+      cmd <- parseCmd(cmd)
       input <- loadInput.toEither.left.map(_ => Unknown)
-    } yield (Counter fromCommand cmd) count input
+    } yield countWords(cmd, input)
 
   def ofFile(filepath: String): ParseCmdAndThenCountWords = (cmd, loadInput) =>
     for {
-      cmd <- (Command fromString cmd).toRight(UnknownCommand(cmd))
+      cmd <- parseCmd(cmd)
       input <- loadInput.toEither.left.map {
         case _: NoSuchFileException => FileNotFound(filepath)
         case _ => Unknown
       }
-    } yield (Counter fromCommand cmd) count input
+    } yield countWords(cmd, input)
+
+  private def parseCmd(cmd: String): Either[UnknownCommand, Command] =
+    (Command fromString cmd)
+      .toRight(UnknownCommand(cmd))
+
+  private def countWords(cmd: Command, input: String): CountResult =
+    (Counter fromCommand cmd) count input
 }

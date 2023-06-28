@@ -28,5 +28,5 @@ object Main {
     Try(Files readString (Path of filepath))
 
   private def loadInputFromConsole: Try[String] =
-    Try(scala.io.Source.stdin.getLines().mkString("\n"))
+    Try(io.Source.stdin.getLines().mkString("\n"))
 }
