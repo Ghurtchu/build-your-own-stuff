@@ -12,15 +12,15 @@ object Main {
       case s"-$cmd" :: filename :: Nil =>
         parseCmdAndThenCountWords(
           cmd,
-          readInputFromFile(filename),
+          loadInputFromFile(filename),
         )
       case s"-$cmd" :: Nil =>
         parseCmdAndThenCountWords(
           cmd,
-          readInputFromConsole,
+          loadInputFromConsole,
         )
       case filename :: Nil =>
-        readInputFromFile(filename)
+        loadInputFromFile(filename)
           .fold(
             println,
             input => {
@@ -32,19 +32,19 @@ object Main {
       case _ => println("Incorrect usage, please refer to manual")
     }
 
-  private def parseCmdAndThenCountWords(command: String, readInput: => Try[String]): Unit =
+  private def parseCmdAndThenCountWords(command: String, loadInput: => Try[String]): Unit =
     (Command fromString command)
       .fold(println(s"unrecognized command: $command")) { cmd =>
-        readInput
+        loadInput
           .fold(
             println,
             input => println(countWords(cmd, input)),
           )
       }
-  private def readInputFromFile(fileName: String): Try[String] =
+  private def loadInputFromFile(fileName: String): Try[String] =
     Try(Files readString (Path of fileName))
 
-  private def readInputFromConsole: Try[String] =
+  private def loadInputFromConsole: Try[String] =
     Try(scala.io.Source.stdin.getLines().mkString("\n"))
 
   private def countWords(command: Command, input: String): CountResult =
