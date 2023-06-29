@@ -7,5 +7,5 @@ lazy val root = (project in file("."))
     name := "word-counter",
     libraryDependencies ++= Seq(Dependencies.Testing.Munit, Dependencies.Testing.ScalaTestPlus),
     assembly / mainClass := Some("Main"),
-    assembly / assemblyJarName := "scalawc.jar",
+    assembly / assemblyJarName := "wc.jar",
   )
