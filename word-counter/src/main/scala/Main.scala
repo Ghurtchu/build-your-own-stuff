@@ -1,6 +1,6 @@
-import services.LoadInputAndThenCountWords.OptionSyntax.OptionOps
-import services.ParseCmdAndThenCountWords.EitherSyntax.EitherOps
-import services.{LoadInputAndThenCountWords, ParseCmdAndThenCountWords}
+import services.LoadInputAndThenCountWords.OptionSyntax._
+import services.ParseCmdAndThenCountWords.EitherSyntax._
+import services._
 
 import java.nio.file.{Files, Path}
 import scala.util.Try

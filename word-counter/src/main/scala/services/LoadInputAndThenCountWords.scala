@@ -6,13 +6,18 @@ import domain.MultiCountResult
 import scala.util.Try
 
 trait LoadInputAndThenCountWords {
-  def apply(filepath: String, loadInput: => Try[String]): Option[MultiCountResult]
+  def apply(
+    filepath: String,
+    loadInput: => Try[String],
+  ): Option[MultiCountResult]
 }
 
 object LoadInputAndThenCountWords {
 
   object OptionSyntax {
-    implicit class OptionOps(self: Option[MultiCountResult]) {
+    implicit class OptionOps(
+      self: Option[MultiCountResult],
+    ) {
       def logResult(): Unit = {
         val filepath = self.fold("")(_.filepath)
 
@@ -21,13 +26,14 @@ object LoadInputAndThenCountWords {
     }
   }
 
-  def fromFile: LoadInputAndThenCountWords = (filepath, loadInput) =>
-    loadInput.map { input =>
-      val countResults =
-        DefaultCommands.map { cmd =>
-          (Counter fromCommand cmd) count input
-        }
+  def fromFile: LoadInputAndThenCountWords =
+    (filepath, loadInput) =>
+      loadInput.map { input =>
+        val countResults =
+          DefaultCommands.map { cmd =>
+            (Counter fromCommand cmd) count input
+          }
 
-      MultiCountResult(countResults, filepath)
-    }.toOption
+        MultiCountResult(countResults, filepath)
+      }.toOption
 }

@@ -13,10 +13,11 @@ object Command {
 
   val DefaultCommands = List(Command.Line, Command.Word, Command.Byte)
 
-  def fromString: String => Option[Command] = PartialFunction.condOpt(_) {
-    case "c" => Byte
-    case "m" => Character
-    case "w" => Word
-    case "l" => Line
-  }
+  def fromString: String => Option[Command] =
+    PartialFunction.condOpt(_) {
+      case "c" => Byte
+      case "m" => Character
+      case "w" => Word
+      case "l" => Line
+    }
 }
