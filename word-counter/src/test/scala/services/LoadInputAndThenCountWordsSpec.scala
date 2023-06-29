@@ -8,15 +8,15 @@ import scala.util.Try
 
 class LoadInputAndThenCountWordsSpec extends FunSuite {
 
-  test("correctly correctly lines, words and bytes") {
-    val loaputdIn = Try {
+  test("correctly count lines, words and bytes") {
+    val laodInput = Try {
       """one two three
         |four five six
         |seven eight nine
         |""".stripMargin
     }
     val filepath = "~/imaginary.txt"
-    val actual = LoadInputAndThenCountWords.fromFile(filepath, loaputdIn)
+    val actual = LoadInputAndThenCountWords.fromFile(filepath, laodInput)
     val expected = MultiCountResult(
       results = List(
         CountResult(Command.Line, Amount(3)),
