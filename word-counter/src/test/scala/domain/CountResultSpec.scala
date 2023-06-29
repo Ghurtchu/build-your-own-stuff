@@ -2,7 +2,7 @@ package domain
 
 import munit.FunSuite
 
-class CountResultTest extends FunSuite {
+class CountResultSpec extends FunSuite {
 
   test("return correct toString for plural Character case") {
     assertEquals(CountResult(Command.Character, Amount(500)).toString, "500 characters")

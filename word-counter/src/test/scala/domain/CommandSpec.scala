@@ -2,7 +2,7 @@ package domain
 
 import munit.FunSuite
 
-class CommandTest extends FunSuite {
+class CommandSpec extends FunSuite {
 
   test("should return Some(Byte) if input equals 'c'") {
     assertEquals(Command.fromString("c"), Some(Command.Byte))

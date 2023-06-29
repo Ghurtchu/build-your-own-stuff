@@ -2,7 +2,7 @@ package domain
 
 import munit.FunSuite
 
-class AmountTest extends FunSuite {
+class AmountSpec extends FunSuite {
 
   test("positive amount should return Some(Amount(...))") {
     assertEquals(Amount.fromBigInt(2), Some(Amount(2)))
