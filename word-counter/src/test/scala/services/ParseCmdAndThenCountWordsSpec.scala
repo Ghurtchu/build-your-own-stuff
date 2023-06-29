@@ -26,6 +26,6 @@ class ParseCmdAndThenCountWordsSpec extends FunSuite {
     val cmd = "gibberish"
     val actual = ParseCmdAndThenCountWords.fromStdIn(cmd, Try(""))
 
-    assertEquals(actual, Left(UnknownCommand(s"unknown command: $cmd")))
+    assertEquals(actual, Left(UnknownCommand(cmd)))
   }
 }

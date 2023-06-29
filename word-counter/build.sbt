@@ -5,7 +5,7 @@ ThisBuild / scalaVersion := "2.13.11"
 lazy val root = (project in file("."))
   .settings(
     name := "word-counter",
-    libraryDependencies ++= Seq(Dependencies.Testing.Munit, Dependencies.Testing.ScalaTestPlus),
+    libraryDependencies ++= Seq(Dependencies.Testing.Munit),
     assembly / mainClass := Some("Main"),
     assembly / assemblyJarName := "wc.jar",
   )
