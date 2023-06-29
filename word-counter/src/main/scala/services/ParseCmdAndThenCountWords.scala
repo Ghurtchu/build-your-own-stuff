@@ -13,7 +13,7 @@ trait ParseCmdAndThenCountWords {
 
 object ParseCmdAndThenCountWords {
 
-  object Syntax {
+  object EitherSyntax {
     implicit class EitherOps(self: Either[Error, CountResult]) {
       def logResult(): Unit = self.fold(err => println(err.msg), println)
     }
@@ -34,13 +34,13 @@ object ParseCmdAndThenCountWords {
     }
   }
 
-  def of: ParseCmdAndThenCountWords = (cmd, loadInput) =>
+  def fromStdIn: ParseCmdAndThenCountWords = (cmd, loadInput) =>
     for {
       cmd <- parseCmd(cmd)
       input <- loadInput.toEither.left.map(_ => Unknown)
     } yield countWords(cmd, input)
 
-  def ofFile(filepath: String): ParseCmdAndThenCountWords = (cmd, loadInput) =>
+  def fromFile(filepath: String): ParseCmdAndThenCountWords = (cmd, loadInput) =>
     for {
       cmd <- parseCmd(cmd)
       input <- loadInput.toEither.left.map {

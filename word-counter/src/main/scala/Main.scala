@@ -1,5 +1,5 @@
-import services.LoadInputAndThenCountWords.Syntax.OptionOps
-import services.ParseCmdAndThenCountWords.Syntax.EitherOps
+import services.LoadInputAndThenCountWords.OptionSyntax.OptionOps
+import services.ParseCmdAndThenCountWords.EitherSyntax.EitherOps
 import services.{LoadInputAndThenCountWords, ParseCmdAndThenCountWords}
 
 import java.nio.file.{Files, Path}
@@ -11,15 +11,15 @@ object Main {
     args.toList match {
       case s"-$cmd" :: filepath :: Nil =>
         ParseCmdAndThenCountWords
-          .ofFile(filepath)(cmd, loadInputFromFile(filepath))
+          .fromFile(filepath)(cmd, loadInputFromFile(filepath))
           .logResult()
       case s"-$cmd" :: Nil =>
         ParseCmdAndThenCountWords
-          .of(cmd, loadInputFromConsole)
+          .fromStdIn(cmd, loadInputFromStdIn)
           .logResult()
       case filepath :: Nil =>
         LoadInputAndThenCountWords
-          .of(filepath, loadInputFromFile(filepath))
+          .fromFile(filepath, loadInputFromFile(filepath))
           .logResult()
       case _ => println("Incorrect usage, please refer to manual")
     }
@@ -27,6 +27,6 @@ object Main {
   private def loadInputFromFile(filepath: String): Try[String] =
     Try(Files readString (Path of filepath))
 
-  private def loadInputFromConsole: Try[String] =
+  private def loadInputFromStdIn: Try[String] =
     Try(io.Source.stdin.getLines().mkString("\n"))
 }
