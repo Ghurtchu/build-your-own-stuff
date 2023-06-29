@@ -25,3 +25,7 @@ Setting up and testing:
  - `cat ${some_file_path} | ./wc -m`
  - `cat ${some_file_path} | ./wc -w`
  - `cat ${some_file_path} | ./wc -l`
+
+Example screenshot on my own machine:
+
+![My Image](example.png)
