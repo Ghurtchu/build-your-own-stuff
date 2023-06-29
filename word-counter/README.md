@@ -16,11 +16,11 @@ Setting up and testing:
 `scala scalawc.jar $1 $2`
  - save and exit (I  hope you know to exit vim :smile:)
  - run the following commands for testing:
- - `./scalawc -c input.txt`
- - `./scalawc -m input.txt`
- - `./scalawc -w input.txt`
- - `./scalawc -l input.txt`
- - `./scalawc input.txt`
+ - `./scalawc -c ~/input.txt`
+ - `./scalawc -m ~/input.txt`
+ - `./scalawc -w ~/input.txt`
+ - `./scalawc -l ~/input.txt`
+ - `./scalawc ~/input.txt`
  - `cat ${some_file_path} | ./scalawc -c`
  - `cat ${some_file_path} | ./scalawc -m`
  - `cat ${some_file_path} | ./scalawc -w`
