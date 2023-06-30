@@ -12,20 +12,20 @@ object Main extends App {
 
   val input =
     """{
-      |"key": "value",
-      |"key-n": 101,
-      |"dec": 102.5,
-      |"kokoiti": true,
-      |"key-o": {
-      |  "skarpetek": "holy",
-      |  "scoobie": "doobie",
-      |  "help": {
-      |    "xd": 2,
-      |    "what": {
-      |      "nothing": "...."
+      |  "key": "value",
+      |  "key-n": 101,
+      |  "dec": 102.5,
+      |  "kokoiti": true,
+      |  "key-o": {
+      |    "skarpetek": "holy",
+      |    "scoobie": "doobie",
+      |    "help": {
+      |      "xd": 2,
+      |      "what": {
+      |        "nothing": "...."
+      |      }
       |    }
       |  }
-      |}
       |}""".stripMargin
 
   val res = Json.parse(input)
