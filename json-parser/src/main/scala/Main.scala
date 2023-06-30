@@ -23,8 +23,10 @@ object Main extends App {
       |    "help": {
       |      "xd": 2,
       |      "what": {
-      |        "nothing": "...."
-      |      }
+      |        "nothing": "....",
+      |        "hmm": null
+      |      },
+      |      "kuki": "2"
       |    }
       |  }
       |}""".stripMargin
@@ -34,23 +36,25 @@ object Main extends App {
   println(res)
 
   val expected = Json.Obj(
-    mutable.LinkedHashMap(
+    Map(
       "key" -> Json.Str("value"),
       "key-n" -> Json.Int(BigInt(101)),
       "dec" -> Json.Decim(BigDecimal(102.5)),
       "kokoiti" -> Json.Bool(true),
       "key-o" -> Json.Obj(
-        mutable.LinkedHashMap(
+        Map(
           "skarpetek" -> Json.Str("holy"),
           "scoobie" -> Json.Str("doobie"),
           "help" -> Json.Obj(
-            mutable.LinkedHashMap(
+            Map(
               "xd" -> Json.Int(BigInt(2)),
               "what" -> Json.Obj(
-                mutable.LinkedHashMap(
+                Map(
                   "nothing" -> Json.Str("...."),
+                  "hmm" -> Json.Null,
                 ),
               ),
+              "kuki" -> Json.Str("2"),
             ),
           ),
         ),
