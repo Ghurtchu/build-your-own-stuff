@@ -31,6 +31,8 @@ object Json {
       Json.Decim(BigDecimal(input))
     else if (Try(BigInt(input)).isSuccess)
       Json.Int(BigInt(input))
+    else if (input.length >= 2 && input.startsWith("\"") && input.endsWith("\""))
+      Json.Str(input.tail.init)
     else { // non primitives
       val map = mutable.LinkedHashMap.empty[String, Json]
       val normalzied = input.substring(1, input.length - 1)

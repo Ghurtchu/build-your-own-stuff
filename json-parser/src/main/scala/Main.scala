@@ -9,6 +9,7 @@ object Main extends App {
   assert(Json.parse("false") == Json.Bool(false))
   assert(Json.parse("15.43") == Json.Decim(BigDecimal(15.43)))
   assert(Json.parse("-4") == Json.Int(BigInt(-4)))
+  assert(Json.parse("\"Scala\"") == Json.Str("Scala"))
 
   val input =
     """{
