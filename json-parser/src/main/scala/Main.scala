@@ -26,7 +26,7 @@ object Main extends App {
       |        "nothing": "....",
       |        "hmm": null
       |      },
-      |      "kuki": "2"
+      |      "YES": null
       |    }
       |  }
       |}""".stripMargin
@@ -54,7 +54,7 @@ object Main extends App {
                   "hmm" -> Json.Null,
                 ),
               ),
-              "kuki" -> Json.Str("2"),
+              "YES" -> Json.Null,
             ),
           ),
         ),

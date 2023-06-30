@@ -115,7 +115,7 @@ object Json {
           jsObjectEnd = true
 
         }
-        if (jsObjectEnd && (openParens == closeParens)) {
+        if (jsObjectEnd && (openParens == closeParens) && line.contains("}")) {
           insideJsObject = false
           jsonObjectStr += "\n" + line
           val lines = jsonObjectStr.split("\n")
