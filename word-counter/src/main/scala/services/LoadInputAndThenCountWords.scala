@@ -1,7 +1,7 @@
 package services
 
 import domain.Command.DefaultCommands
-import domain.{Command, CountResult, MultiCountResult}
+import domain.MultiCountResult
 
 import scala.util.Try
 

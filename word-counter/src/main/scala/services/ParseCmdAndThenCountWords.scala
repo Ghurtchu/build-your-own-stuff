@@ -57,10 +57,7 @@ object ParseCmdAndThenCountWords {
       .fromString(cmd)
       .toRight(UnknownCommand(cmd))
 
-  private def countWords(
-    cmd: Command,
-    input: String,
-  ): CountResult =
+  private def countWords(cmd: Command, input: String): CountResult =
     Counter
       .fromCommand(cmd)
       .count(input)
