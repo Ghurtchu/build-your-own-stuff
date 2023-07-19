@@ -8,11 +8,13 @@ trait Counter {
 
 object Counter {
   def fromCommand(command: Command): Counter =
-    (input: String) =>
-      CountResult(
-        command = command,
-        amount = Amount fromBigInt defineAmount(command, input) getOrElse Amount.empty,
-      )
+    (input: String) => {
+      val amount = Amount
+        .fromBigInt(defineAmount(command, input))
+        .getOrElse(Amount.empty)
+
+      CountResult(command, amount)
+    }
 
   private def defineAmount(
     command: Command,

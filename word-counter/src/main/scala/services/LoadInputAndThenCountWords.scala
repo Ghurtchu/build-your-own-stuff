@@ -16,9 +16,9 @@ object LoadInputAndThenCountWords {
   def fromFile: LoadInputAndThenCountWords =
     (filepath, loadInput) =>
       loadInput.map { input =>
-        MultiCountResult(
-          results = DefaultCommands.map(Counter.fromCommand(_) count input),
-          filepath = filepath,
-        )
+        val results = DefaultCommands
+          .map(Counter.fromCommand(_).count(input))
+
+        MultiCountResult(results, filepath)
       }.toOption
 }
