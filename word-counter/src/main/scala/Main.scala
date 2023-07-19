@@ -1,5 +1,5 @@
-import services.LoadInputAndThenCountWords.OptionSyntax._
-import services.ParseCmdAndThenCountWords.EitherSyntax._
+import services.EitherSyntax.EitherOps
+import services.OptionSyntax.OptionOps
 import services._
 
 import java.nio.file.{Files, Path}

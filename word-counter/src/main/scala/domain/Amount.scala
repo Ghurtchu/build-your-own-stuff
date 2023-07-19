@@ -1,10 +1,7 @@
 package domain
 
-final case class Amount private (
-  value: BigInt,
-) extends AnyVal {
-  override def toString: String =
-    value.toString
+final case class Amount private (value: BigInt) extends AnyVal {
+  override def toString: String = value.toString
 }
 
 object Amount {

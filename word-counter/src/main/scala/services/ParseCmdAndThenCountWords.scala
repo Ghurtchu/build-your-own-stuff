@@ -16,31 +16,16 @@ trait ParseCmdAndThenCountWords {
 
 object ParseCmdAndThenCountWords {
 
-  object EitherSyntax {
-    implicit class EitherOps(
-      self: Either[Error, CountResult],
-    ) {
-      def logResult(): Unit =
-        self.fold(
-          err => println(err.msg),
-          println,
-        )
-    }
-  }
   sealed trait Error {
     def msg: String
   }
 
   object Error {
-    final case class UnknownCommand(
-      cmd: String,
-    ) extends Error {
+    final case class UnknownCommand(cmd: String) extends Error {
       override def msg: String =
         s"unknown command: $cmd"
     }
-    final case class FileNotFound(
-      filepath: String,
-    ) extends Error {
+    final case class FileNotFound(filepath: String) extends Error {
       override def msg: String =
         s"could not find the file: $filepath"
     }
@@ -68,9 +53,15 @@ object ParseCmdAndThenCountWords {
       } yield countWords(cmd, input)
 
   private def parseCmd(cmd: String): Either[UnknownCommand, Command] =
-    (Command fromString cmd)
+    Command
+      .fromString(cmd)
       .toRight(UnknownCommand(cmd))
 
-  private def countWords(cmd: Command, input: String): CountResult =
-    (Counter fromCommand cmd) count input
+  private def countWords(
+    cmd: Command,
+    input: String,
+  ): CountResult =
+    Counter
+      .fromCommand(cmd)
+      .count(input)
 }
