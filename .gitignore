@@ -1,0 +1,15 @@
+.idea
+.bsp
+.vscode
+.bloop
+.history
+.metals
+metals.sbt
+target
+/project/*.conf
+.DS_Store
+
+logs/
+
+slimdown-data.json
+
