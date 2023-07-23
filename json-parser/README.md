@@ -8,8 +8,6 @@ Setting up and testing:
 - cd to home: `cd ~`
 - clone the repo
 - run: `cd json-parser`
-- run: `sbt assembly`
-- run: `cd ..`
 - run: `vim parsejson`
 - paste the following three lines inside `parsejson`:
 
