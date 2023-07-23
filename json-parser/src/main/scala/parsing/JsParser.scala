@@ -15,17 +15,22 @@ object JsParser {
 
   import regexParser._
 
+  def parse(input: String): Option[Js] =
+    parseAll(js, input)
+      .map(Some(_))
+      .getOrElse(None)
+
   private def jsObj: Parser[JsObj] =
     JsObjStart.value ~> repsep(member, ",") <~ JsObjEnd.value ^^ (fields => JsObj(fields.toMap))
 
   private def jsArr: Parser[JsArr] =
-    JsArrStart.value ~> repsep(js, ",") <~ JsArrEnd.value ^^ (elements => JsArr(elements))
+    JsArrStart.value ~> repsep(js, ",") <~ JsArrEnd.value ^^ (JsArr(_))
 
   private def jsStr: Parser[JsStr] =
     "\"" ~> """([^"\p{Cntrl}\\]|\\[\\'"bfnrt]|\\u[a-fA-F0-9]{4})*""".r <~ "\"" ^^ JsStr
 
   private def jsNum: Parser[JsNum] =
-    """-?(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][+-]?\d+)?""".r ^^ (num => JsNum(num.toDouble))
+    """-?(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][+-]?\d+)?""".r ^^ (s => JsNum(BigDecimal.exact(s)))
 
   private def jsBool: Parser[JsBool] =
     "true" ^^ (_ => JsBool(true)) |
@@ -39,12 +44,4 @@ object JsParser {
 
   private def member: Parser[(String, Js)] =
     jsStr ~ (Colon.value ~> js) ^^ { case key ~ v => (key.value, v) }
-
-  private def parseJson(input: String): ParseResult[Js] =
-    parseAll(js, input)
-
-  def parse(input: String): Option[Js] =
-    parseAll(js, input)
-      .map(Some(_))
-      .getOrElse(None)
 }
