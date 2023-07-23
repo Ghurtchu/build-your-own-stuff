@@ -5,7 +5,6 @@
 .history
 .metals
 metals.sbt
-target
 /project/*.conf
 .DS_Store
 
