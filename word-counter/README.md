@@ -7,14 +7,8 @@ Setting up and testing:
  - cd to home: `cd ~`
  - clone the repo
  - run: `cd word-counter`
- - run: `vim wc`
- - paste the following three lines inside wc:
+ - run: `sudo chmod 755 wc`
 
-`#!/bin/sh`
-
-`cd ~/build-your-own-stuff/word-counter/target/scala-2.13/`
-
-`scala wc.jar $1 $2`
  - save and exit (I  hope you know to exit vim :smile:)
  - run the following commands for testing:
  - `./wc -c ~/input.txt`
