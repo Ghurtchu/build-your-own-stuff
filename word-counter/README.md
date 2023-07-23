@@ -9,8 +9,7 @@ Setting up and testing:
  - run: `cd word-counter`
  - run: `sudo chmod 755 wc`
 
- - save and exit (I  hope you know to exit vim :smile:)
- - run the following commands for testing:
+run the following commands for testing:
  - `./wc -c ~/input.txt`
  - `./wc -m ~/input.txt`
  - `./wc -w ~/input.txt`
