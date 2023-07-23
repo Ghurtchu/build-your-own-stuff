@@ -6,6 +6,9 @@ Setting up and testing:
  
  - cd to home: `cd ~`
  - clone the repo
+ - `cd word-counter`
+ - run: `sbt assembly`
+ - `cd ..`
  - run: `vim wc`
  - paste the following three lines inside wc:
 
