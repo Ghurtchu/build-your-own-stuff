@@ -25,10 +25,12 @@ object ParseCmdAndThenCountWords {
       override def msg: String =
         s"unknown command: $cmd"
     }
+
     final case class FileNotFound(filepath: String) extends Error {
       override def msg: String =
         s"could not find the file: $filepath"
     }
+
     case object Unknown extends Error {
       override def msg: String =
         "unknown error"
@@ -36,20 +38,19 @@ object ParseCmdAndThenCountWords {
   }
 
   def fromStdIn: ParseCmdAndThenCountWords =
-    (cmd, loadInput) =>
-      for {
-        cmd <- parseCmd(cmd)
-        input <- loadInput.toEither.left.map(_ => Unknown)
-      } yield countWords(cmd, input)
+    of(_ => Unknown)
 
   def fromFile(filepath: String): ParseCmdAndThenCountWords =
+    of {
+      case _: NoSuchFileException => FileNotFound(filepath)
+      case _ => Unknown
+    }
+
+  private def of(mapError: Throwable => Error): ParseCmdAndThenCountWords =
     (cmd, loadInput) =>
       for {
         cmd <- parseCmd(cmd)
-        input <- loadInput.toEither.left.map {
-          case _: NoSuchFileException => FileNotFound(filepath)
-          case _ => Unknown
-        }
+        input <- loadInput.toEither.left.map(mapError)
       } yield countWords(cmd, input)
 
   private def parseCmd(cmd: String): Either[UnknownCommand, Command] =
