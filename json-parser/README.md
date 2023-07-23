@@ -2,6 +2,8 @@ Build a JSON parser
 
 https://codingchallenges.substack.com/p/coding-challenge-2
 
+I used `scala.util.parsing.combinators` to parse raw JSON string to sealed `Js` hierarchy, please view: `json/Js.scala` 
+
 Setting up and testing:
 - cd to home: `cd ~`
 - clone the repo
