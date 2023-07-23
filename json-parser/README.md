@@ -8,7 +8,6 @@ Setting up and testing:
 - run: `cd ~`
 - clone the repo
 - run: `cd build-your-own-stuff/json-parser`
-- run: `sudo chmod 755 parsejson`
 
 save and exit (I hope you know to exit vim 😄)
 run the following commands for testing:
