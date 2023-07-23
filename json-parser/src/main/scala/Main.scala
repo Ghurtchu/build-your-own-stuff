@@ -1,4 +1,5 @@
 import json.Js._
+import json.JsSyntax.Syntax
 import parsing.JsonParser
 
 object Main extends App {
@@ -30,33 +31,23 @@ object Main extends App {
   val res = JsonParser.parse(jsStr)
 
   val expected = JsObj(
-    Map(
-      "name" -> JsStr("Scala"),
-      "popularity" -> JsStr("average"),
-      "runtimes" -> JsArr(List("jvm", "native", "js").map(JsStr)),
-      "meta" -> JsObj(
-        Map(
-          "creator" -> JsStr("Martin Odersky"),
-          "libraries" -> JsArr(
-            List(
-              JsObj(
-                Map(
-                  "name" -> JsStr("akka"),
-                  "isPopular" -> JsBool(true),
-                  "downloads" -> JsNum(999999),
-                  "isFree" -> JsNull,
-                ),
-              ),
-              JsObj(
-                Map(
-                  "name" -> JsStr("ZIO"),
-                  "isPopular" -> JsBool(true),
-                  "downloads" -> JsNum(100000),
-                  "isFree" -> JsBool(true),
-                ),
-              ),
-            ),
-          ),
+    "name" -> "Scala".js,
+    "popularity" -> "average".js,
+    "runtimes" -> JsArr.strings("jvm", "native", "js"),
+    "meta" -> JsObj(
+      "creator" -> "Martin Odersky".js,
+      "libraries" -> JsArr(
+        JsObj(
+          "name" -> "akka".js,
+          "isPopular" -> true.js,
+          "downloads" -> 999999.js,
+          "isFree" -> JsNull,
+        ),
+        JsObj(
+          "name" -> "ZIO".js,
+          "isPopular" -> true.js,
+          "downloads" -> 100000.js,
+          "isFree" -> true.js,
         ),
       ),
     ),

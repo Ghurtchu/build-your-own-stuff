@@ -1,7 +1,8 @@
 package parsing
 
 import json.Js
-import json.Js.{JsArr, JsBool, JsNull, JsNum, JsObj, JsStr}
+import json.Js._
+import json.JsToken._
 
 import scala.util.matching.Regex
 import scala.util.parsing.combinator.RegexParsers
@@ -15,10 +16,10 @@ object JsonParser {
   import regexParser._
 
   private def jsObj: Parser[JsObj] =
-    "{" ~> repsep(member, ",") <~ "}" ^^ (fields => JsObj(fields.toMap))
+    JsObjStart.value ~> repsep(member, ",") <~ JsObjEnd.value ^^ (fields => JsObj(fields.toMap))
 
   private def jsArr: Parser[JsArr] =
-    "[" ~> repsep(js, ",") <~ "]" ^^ (elements => JsArr(elements))
+    JsArrStart.value ~> repsep(js, ",") <~ JsArrEnd.value ^^ (elements => JsArr(elements))
 
   private def jsStr: Parser[JsStr] =
     "\"" ~> """([^"\p{Cntrl}\\]|\\[\\'"bfnrt]|\\u[a-fA-F0-9]{4})*""".r <~ "\"" ^^ JsStr
@@ -37,7 +38,7 @@ object JsonParser {
     jsObj | jsArr | jsStr | jsNum | jsBool | jsNull
 
   private def member: Parser[(String, Js)] =
-    jsStr ~ (":" ~> js) ^^ { case key ~ v => (key.value, v) }
+    jsStr ~ (Colon.value ~> js) ^^ { case key ~ v => (key.value, v) }
 
   // Parses the entire JSON input
   private def parseJson(input: String): ParseResult[Js] =
