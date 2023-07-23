@@ -7,7 +7,7 @@ import json.JsToken._
 import scala.util.matching.Regex
 import scala.util.parsing.combinator.RegexParsers
 
-object JsonParser {
+object JsParser {
 
   private val regexParser = new RegexParsers {
     override val whiteSpace: Regex = """\s+""".r
@@ -40,7 +40,6 @@ object JsonParser {
   private def member: Parser[(String, Js)] =
     jsStr ~ (Colon.value ~> js) ^^ { case key ~ v => (key.value, v) }
 
-  // Parses the entire JSON input
   private def parseJson(input: String): ParseResult[Js] =
     parseAll(js, input)
 

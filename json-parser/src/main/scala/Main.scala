@@ -1,6 +1,6 @@
 import json.Js._
 import json.JsSyntax.Syntax
-import parsing.JsonParser
+import parsing.JsParser
 
 object Main extends App {
 
@@ -28,7 +28,7 @@ object Main extends App {
       |  }
       |}""".stripMargin
 
-  val res = JsonParser.parse(jsStr)
+  val res = JsParser.parse(jsStr)
 
   val expected = JsObj(
     "name" -> "Scala".js,
