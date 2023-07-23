@@ -7,7 +7,6 @@ Setting up and testing:
  - cd to home: `cd ~`
  - clone the repo
  - run: `cd build-your-own-stuff/word-counter`
- - run: `sudo chmod 755 wc`
 
 run the following commands for testing:
  - `./wc -c ~/input.txt`
