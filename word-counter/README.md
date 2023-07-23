@@ -4,7 +4,7 @@ https://codingchallenges.substack.com/p/coding-challenge-1
 
 Setting up and testing:
  
- - cd to home: `cd ~`
+ - run: `cd ~`
  - clone the repo
  - run: `cd build-your-own-stuff/word-counter`
 
