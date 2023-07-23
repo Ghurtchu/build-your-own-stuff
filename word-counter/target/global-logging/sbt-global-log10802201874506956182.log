@@ -1,0 +1,10 @@
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(assembly, Some(c9229fdb-85ef-4efb-a0ad-849409fbaeb8), Some(CommandSource(console0)))[0m
+[0m[[0m[0mdebug[0m] [0m[0mEvaluating tasks: assembly[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning task... Cancel: Signal, check cycles: false, forcegc: true[0m
+[0m[[0m[0minfo[0m] [0m[0mcompiling 9 Scala sources to /Users/aghurtchumelia/build-your-own-stuff/word-counter/target/scala-2.13/classes ...[0m
+[0m[[0m[33mwarn[0m] [0m[0m1 deprecation (since 2.13.3); re-run with -deprecation for details[0m
+[0m[[0m[33mwarn[0m] [0m[0mone warning found[0m
+[0m[[0m[0minfo[0m] [0m[0mStrategy 'discard' was applied to a file (Run the task at debug level to see details)[0m
+[0m[[0m[0minfo[0m] [0m[0mStrategy 'rename' was applied to 2 files (Run the task at debug level to see details)[0m
+[0m[[0m[32msuccess[0m] [0m[0mTotal time: 4 s, completed Jul 23, 2023, 3:57:08 PM[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(shell, None, None)[0m

@@ -26,7 +26,7 @@ object Main {
     }
 
   private def loadInputFromFile(filepath: String): Try[String] =
-    Try(Files.readString(Path.of(filepath)))
+    Try(Files readString Path.of(filepath))
 
   private def loadInputFromStdIn: Try[String] =
     Try(stdin.getLines.mkString("\n"))
