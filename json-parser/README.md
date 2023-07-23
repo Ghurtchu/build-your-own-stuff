@@ -28,3 +28,7 @@ run the following commands for testing:
 - `./parsejson \"hello\"`
 - `./parsejson "{\"name\": \"nika\", \"age\": 24}"`
 - `/parsejson "{\"data\": [{\"a\": 1}, {\"b\": 2}]}"`
+
+Example screenshot on my own machine:
+
+![My Image](example.png)

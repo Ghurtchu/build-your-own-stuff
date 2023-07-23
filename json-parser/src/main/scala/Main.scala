@@ -2,7 +2,7 @@ import json.Js._
 import json.JsSyntax.Syntax
 import parsing.JsParser
 
-object Main extends App {
+object Main {
 
   val jsStr =
     """{
@@ -54,5 +54,13 @@ object Main extends App {
   )
 
   assert(res.contains(expected))
+
+  def main(args: Array[String]): Unit =
+    args.toList match {
+      case input =>
+        JsParser
+          .parse(input.mkString)
+          .fold(println("parsing error"))(println)
+    }
 
 }
