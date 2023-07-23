@@ -7,6 +7,9 @@ I used `scala.util.parsing.combinators` to parse raw JSON string to sealed `Js` 
 Setting up and testing:
 - cd to home: `cd ~`
 - clone the repo
+- `cd json-parser`
+- `sbt assembly`
+- `cd ..`
 - run: `vim parsejson`
 - paste the following three lines inside `parsejson`:
 
