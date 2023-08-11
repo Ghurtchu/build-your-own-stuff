@@ -7,10 +7,15 @@ trait Parser {
 }
 
 object Parser {
-  def of: Parser =
+
+  def ofComma: Parser = of(Delimiter.Comma)
+
+  def ofTab: Parser = of(Delimiter.Tab)
+
+  private def of(delimiter: Delimiter): Parser =
     (input: String) => {
       val splitted = input.split("\n")
-      val headers = splitted.head.split("\\s")
+      val headers = splitted.head.split(delimiter.repr)
       val rows = splitted.tail.zipWithIndex.map {
         case (rowAsString, rowIndex) =>
           createRow(rowAsString, rowIndex, headers)
