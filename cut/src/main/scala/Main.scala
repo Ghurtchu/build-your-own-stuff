@@ -12,19 +12,19 @@ object Main {
           .fold(
             _ => println("file does not exist"),
             content => {
-              val res = Parser.ofTab(content)
+              Parser
+                .ofTab(content)
                 .getColumnByHeader(Header(colname))
-
-              res.foreach(println)
+                .foreach(println)
             },
           )
-      case s"-$colname" :: s"-$delimiterWithValue" :: Nil => {
-        val delimiter = Delimiter.fromString(delimiterWithValue)
+      case s"-$colname" :: s"-$delimiterWithValue" :: Nil =>
+        val delimiter = Delimiter
+          .fromString(delimiterWithValue)
           .getOrElse(Delimiter.Tab)
 
-        println("unimplemented")
+        println("unimplemented...")
 
-      }
       case _ => println("Incorrect usage, please refer to manual")
     }
 
