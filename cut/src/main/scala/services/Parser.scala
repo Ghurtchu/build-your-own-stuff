@@ -11,17 +11,24 @@ object Parser {
     (input: String) => {
       val splitted = input.split("\n")
       val headers = splitted.head.split("\\s")
-      val rows = splitted.tail.zipWithIndex.map { case (rowString, rowIndex) =>
-        createRow(rowString, rowIndex, headers)
+      val rows = splitted.tail.zipWithIndex.map {
+        case (rowAsString, rowIndex) =>
+          createRow(rowAsString, rowIndex, headers)
       }
-      val columns = headers.zipWithIndex.map { case (header, index) => createColumn(header, index, rows.toList) }
+      val columns = headers.zipWithIndex.map { case (header, index) =>
+        createColumn(header, index, rows.toList)
+      }.toList
 
-      Dataframe(columns.toList)
+      Dataframe(columns)
     }
 
-  private def createRow(rowString: String, rowIndex: Int, headers: Array[String]): Row =
+  private def createRow(
+    rowAsString: String,
+    rowIndex: Int,
+    headers: Array[String],
+  ): Row =
     Row {
-      rowString
+      rowAsString
         .split("\\s")
         .zip(headers.indices)
         .map { case (rowValue, columnIndex) =>
@@ -30,10 +37,21 @@ object Parser {
         .toList
     }
 
-  private def createCell(rowValue: String, columnIndex: Int, rowIndex: Int): Cell =
-    Cell(Position.from(rowIndex, columnIndex).getOrElse(Position.zero), rowValue)
+  private def createCell(
+    rowValue: String,
+    columnIndex: Int,
+    rowIndex: Int,
+  ): Cell =
+    Cell(
+      Position.from(rowIndex, columnIndex).getOrElse(Position.zero),
+      rowValue,
+    )
 
-  private def createColumn(header: String, index: Int, rows: List[Row]): Column =
+  private def createColumn(
+    header: String,
+    index: Int,
+    rows: List[Row],
+  ): Column =
     Column(Header(header), rows.map(_.values(index)))
 
 }

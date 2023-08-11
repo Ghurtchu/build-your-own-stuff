@@ -21,7 +21,9 @@ object JsParser {
       .getOrElse(None)
 
   private def jsObj: Parser[JsObj] =
-    JsObjStart.value ~> repsep(member, ",") <~ JsObjEnd.value ^^ (fields => JsObj(fields.toMap))
+    JsObjStart.value ~> repsep(member, ",") <~ JsObjEnd.value ^^ (fields =>
+      JsObj(fields.toMap),
+    )
 
   private def jsArr: Parser[JsArr] =
     JsArrStart.value ~> repsep(js, ",") <~ JsArrEnd.value ^^ (JsArr(_))
@@ -30,7 +32,9 @@ object JsParser {
     "\"" ~> """([^"\p{Cntrl}\\]|\\[\\'"bfnrt]|\\u[a-fA-F0-9]{4})*""".r <~ "\"" ^^ JsStr
 
   private def jsNum: Parser[JsNum] =
-    """-?(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][+-]?\d+)?""".r ^^ (s => JsNum(BigDecimal.exact(s)))
+    """-?(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][+-]?\d+)?""".r ^^ (s =>
+      JsNum(BigDecimal.exact(s)),
+    )
 
   private def jsBool: Parser[JsBool] =
     "true" ^^ (_ => JsBool(true)) |
