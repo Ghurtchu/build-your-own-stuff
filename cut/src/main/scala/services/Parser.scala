@@ -12,25 +12,16 @@ object Parser {
 
   def of(delimiter: Delimiter): Parser =
     (input: String) => {
-      implicit val d: Delimiter = delimiter
       val lines = input.split("\n")
-      val headers = lines.head.split(delimiter.repr).map(_.replaceAll("[\uFEFF-\uFFFF]", ""))
+      val headers = lines.head
+        .split(delimiter.repr)
+        .map(_.replaceAll("[\uFEFF-\uFFFF]", ""))
       val rows = lines.tail.zipWithIndex.map { case (rowAsString, rowIndex) =>
-        createRow(rowAsString, rowIndex, headers.indices)
+        createRow(rowAsString, rowIndex, headers.indices, delimiter)
       }
-      var columns: List[Column] = null
-        columns = headers.zipWithIndex.map { case (header, index) =>
-          try {
-            createColumn(header, index, rows.toList)
-          } catch {
-            case e: Exception => {
-              println(header)
-              println(index)
-              createColumn(header, index, rows.toList)
-            }
-          }
-        }.toList
-
+      val columns = headers.zipWithIndex.map { case (header, index) =>
+        createColumn(header, index, rows.toList)
+      }.toList
 
       Dataframe(columns)
     }
@@ -39,7 +30,8 @@ object Parser {
     rowAsString: String,
     rowIndex: Int,
     indexRange: Range,
-  )(implicit delimiter: Delimiter): Row =
+    delimiter: Delimiter,
+  ): Row =
     Row {
       rowAsString
         .split(delimiter.repr)

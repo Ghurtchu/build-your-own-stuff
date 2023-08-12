@@ -8,17 +8,38 @@ import scala.util.Try
 object Main {
   def main(args: Array[String]): Unit =
     args.toList match {
-      case s"-$colname" :: filename :: Nil =>
+      case s"-f$numbers" :: filename :: Nil =>
         readFile(filename)
           .fold(
             _ => println("file does not exist"),
-            content =>
-              Parser
+            content => {
+              val parsed = if (numbers.contains(",")) {
+                val nums = numbers.split(",")
+                val numsParsed = nums.flatMap { n => Try(n.toInt).toOption }
+                if (numsParsed.length == nums.length) {
+                  Some(numsParsed)
+                } else None
+              } else if (numbers.contains("\\s")) {
+                val nums = numbers.split("\\s")
+                val numsParsed = nums.flatMap { n => Try(n.toInt).toOption }
+                if (numsParsed.length == nums.length) {
+                  Some(numsParsed)
+                } else None
+              } else None
+
+              val parser = Parser
                 .ofTab(content)
-                .getColumnByHeader(Header(colname))
-                .foreach(println),
+
+              parsed match {
+                case Some(value) => {
+                  value.map { i => parser.getColumnByIndex(i) }
+                    .foreach(println)
+                }
+                case None => println("xd")
+              }
+            }
           )
-      case s"-$colname" :: s"-$delimiterWithValue" :: filename :: Nil =>
+      case s"-f$number" :: s"-$delimiterWithValue" :: filename :: Nil =>
         readFile(filename)
           .fold(
             _ => println("file does not exist"),
@@ -28,7 +49,7 @@ object Main {
                 .getOrElse(Delimiter.Tab)
               Parser
                 .of(delimiter)(content)
-                .getColumnByHeader(Header(colname))
+                .getColumnByIndex(number.toInt)
                 .foreach(println)
             },
           )
