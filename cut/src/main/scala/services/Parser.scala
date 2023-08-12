@@ -2,9 +2,7 @@ package services
 
 import domain._
 
-trait Parser {
-  def apply(input: String): Dataframe
-}
+trait Parser extends (String => Dataframe)
 
 object Parser {
 
@@ -12,17 +10,27 @@ object Parser {
 
   def ofTab: Parser = of(Delimiter.Tab)
 
-  private def of(delimiter: Delimiter): Parser =
+  def of(delimiter: Delimiter): Parser =
     (input: String) => {
-      val splitted = input.split("\n")
-      val headers = splitted.head.split(delimiter.repr)
-      val rows = splitted.tail.zipWithIndex.map {
-        case (rowAsString, rowIndex) =>
-          createRow(rowAsString, rowIndex, headers)
+      implicit val d: Delimiter = delimiter
+      val lines = input.split("\n")
+      val headers = lines.head.split(delimiter.repr).map(_.replaceAll("[\uFEFF-\uFFFF]", ""))
+      val rows = lines.tail.zipWithIndex.map { case (rowAsString, rowIndex) =>
+        createRow(rowAsString, rowIndex, headers.indices)
       }
-      val columns = headers.zipWithIndex.map { case (header, index) =>
-        createColumn(header, index, rows.toList)
-      }.toList
+      var columns: List[Column] = null
+        columns = headers.zipWithIndex.map { case (header, index) =>
+          try {
+            createColumn(header, index, rows.toList)
+          } catch {
+            case e: Exception => {
+              println(header)
+              println(index)
+              createColumn(header, index, rows.toList)
+            }
+          }
+        }.toList
+
 
       Dataframe(columns)
     }
@@ -30,12 +38,12 @@ object Parser {
   private def createRow(
     rowAsString: String,
     rowIndex: Int,
-    headers: Array[String],
-  ): Row =
+    indexRange: Range,
+  )(implicit delimiter: Delimiter): Row =
     Row {
       rowAsString
-        .split("\\s")
-        .zip(headers.indices)
+        .split(delimiter.repr)
+        .zip(indexRange)
         .map { case (rowValue, columnIndex) =>
           createCell(rowValue, columnIndex, rowIndex)
         }

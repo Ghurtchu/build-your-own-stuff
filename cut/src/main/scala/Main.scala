@@ -1,6 +1,7 @@
 import domain.{Delimiter, Header}
 import services.Parser
 
+import java.nio.charset.{Charset, StandardCharsets}
 import java.nio.file.{Files, Path}
 import scala.util.Try
 
@@ -11,19 +12,26 @@ object Main {
         readFile(filename)
           .fold(
             _ => println("file does not exist"),
-            content => {
+            content =>
               Parser
                 .ofTab(content)
+                .getColumnByHeader(Header(colname))
+                .foreach(println),
+          )
+      case s"-$colname" :: s"-$delimiterWithValue" :: filename :: Nil =>
+        readFile(filename)
+          .fold(
+            _ => println("file does not exist"),
+            content => {
+              val delimiter = Delimiter
+                .fromString(delimiterWithValue.tail)
+                .getOrElse(Delimiter.Tab)
+              Parser
+                .of(delimiter)(content)
                 .getColumnByHeader(Header(colname))
                 .foreach(println)
             },
           )
-      case s"-$colname" :: s"-$delimiterWithValue" :: Nil =>
-        val delimiter = Delimiter
-          .fromString(delimiterWithValue)
-          .getOrElse(Delimiter.Tab)
-
-        println("unimplemented...")
 
       case _ => println("Incorrect usage, please refer to manual")
     }
