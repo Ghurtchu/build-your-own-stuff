@@ -1,7 +1,6 @@
-import domain.{Delimiter, Header}
+import domain.{Delimiter, Header, Regex}
 import services.Parser
 
-import java.nio.charset.{Charset, StandardCharsets}
 import java.nio.file.{Files, Path}
 import scala.util.Try
 
@@ -13,31 +12,21 @@ object Main {
           .fold(
             _ => println("file does not exist"),
             content => {
-              val parsed = if (numbers.contains(",")) {
-                val nums = numbers.split(",")
-                val numsParsed = nums.flatMap { n => Try(n.toInt).toOption }
-                if (numsParsed.length == nums.length) {
-                  Some(numsParsed)
-                } else None
-              } else if (numbers.contains("\\s")) {
-                val nums = numbers.split("\\s")
-                val numsParsed = nums.flatMap { n => Try(n.toInt).toOption }
-                if (numsParsed.length == nums.length) {
-                  Some(numsParsed)
-                } else None
-              } else None
+              val parsedNumbers = for {
+                regex <- Regex.fromSplittable(numbers)
+                parsed <- parse(numbers, regex)
+              } yield parsed
 
-              val parser = Parser
-                .ofTab(content)
+              val parser = Parser.ofTab(content)
 
-              parsed match {
-                case Some(value) => {
-                  value.map { i => parser.getColumnByIndex(i) }
+              parsedNumbers match {
+                case Some(value) =>
+                  value
+                    .map(parser.getColumnByIndex)
                     .foreach(println)
-                }
                 case None => println("xd")
               }
-            }
+            },
           )
       case s"-f$number" :: s"-$delimiterWithValue" :: filename :: Nil =>
         readFile(filename)
@@ -56,6 +45,15 @@ object Main {
 
       case _ => println("Incorrect usage, please refer to manual")
     }
+
+  private def parse(numbers: String, regex: Regex): Option[Array[Int]] = {
+    val nums = numbers.split(regex.repr)
+    val numsParsed = nums.flatMap(n => Try(n.toInt).toOption)
+
+    if (numsParsed.length == nums.length)
+      Some(numsParsed)
+    else None
+  }
 
   private def readFile(filename: String): Try[String] =
     Try(Files readString (Path of filename))
