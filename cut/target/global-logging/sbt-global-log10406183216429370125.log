@@ -1,0 +1,10 @@
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(assembly, Some(2d1fdcb0-7332-48a9-8260-4dfc3705255b), Some(CommandSource(console0)))[0m
+[0m[[0m[0mdebug[0m] [0m[0mEvaluating tasks: assembly[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning task... Cancel: Signal, check cycles: false, forcegc: true[0m
+[0m[[0m[0minfo[0m] [0m[0mcompiling 11 Scala sources to /Users/aghurtchumelia/build-your-own-stuff/cut/target/scala-2.13/classes ...[0m
+[0m[[0m[0minfo[0m] [0m[0mNon-compiled module 'compiler-bridge_2.13' for Scala 2.13.11. Compiling...[0m
+[0m[[0m[0minfo[0m] [0m[0m  Compilation completed in 4.299s.[0m
+[0m[[0m[0minfo[0m] [0m[0mStrategy 'discard' was applied to a file (Run the task at debug level to see details)[0m
+[0m[[0m[0minfo[0m] [0m[0mStrategy 'rename' was applied to 2 files (Run the task at debug level to see details)[0m
+[0m[[0m[32msuccess[0m] [0m[0mTotal time: 8 s, completed Aug 14, 2023, 10:45:52 PM[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(shell, None, None)[0m

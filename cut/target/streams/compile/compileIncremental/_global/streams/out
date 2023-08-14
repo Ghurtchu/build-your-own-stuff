@@ -1,0 +1,57 @@
+[0m[[0m[0mdebug[0m] [0m[0m[zinc] IncrementalCompile -----------[0m
+[0m[[0m[0mdebug[0m] [0m[0mIncrementalCompile.incrementalCompile[0m
+[0m[[0m[0mdebug[0m] [0m[0mprevious = Stamps for: 0 products, 0 sources, 0 libraries[0m
+[0m[[0m[0mdebug[0m] [0m[0mcurrent source = Set(${BASE}/src/main/scala/services/NumbersParser.scala, ${BASE}/src/main/scala/domain/Column.scala, ${BASE}/src/main/scala/Main.scala, ${BASE}/src/main/scala/domain/Dataframe.scala, ${BASE}/src/main/scala/domain/Header.scala, ${BASE}/src/main/scala/services/DataframeParser.scala, ${BASE}/src/main/scala/domain/Delimiter.scala, ${BASE}/src/main/scala/domain/Regex.scala, ${BASE}/src/main/scala/domain/Position.scala, ${BASE}/src/main/scala/domain/Cell.scala, ${BASE}/src/main/scala/domain/Row.scala)[0m
+[0m[[0m[0mdebug[0m] [0m[0m> initialChanges = InitialChanges(Changes(added = Set(${BASE}/src/main/scala/services/NumbersParser.scala, ${BASE}/src/main/scala/services/DataframeParser.scala, ${BASE}/src/main/scala/domain/Cell.scala, ${BASE}/src/main/scala/domain/Column.scala, ${BASE}/src/main/scala/domain/Dataframe.scala, ${BASE}/src/main/scala/domain/Regex.scala, ${BASE}/src/main/scala/domain/Position.scala, ${BASE}/src/main/scala/domain/Delimiter.scala, ${BASE}/src/main/scala/Main.scala, ${BASE}/src/main/scala/domain/Header.scala, ${BASE}/src/main/scala/domain/Row.scala), removed = Set(), changed = Set(), unmodified = ...),Set(),Set(),API Changes: Set())[0m
+[0m[[0m[0mdebug[0m] [0m[0mFull compilation, no sources in previous analysis.[0m
+[0m[[0m[0mdebug[0m] [0m[0mall 11 sources are invalidated[0m
+[0m[[0m[0mdebug[0m] [0m[0mInitial set of included nodes: [0m
+[0m[[0m[0mdebug[0m] [0m[0mRecompiling all sources: number of invalidated sources > 50.0 percent of all sources[0m
+[0m[[0m[0mdebug[0m] [0m[0mcompilation cycle 1[0m
+[0m[[0m[0minfo[0m] [0m[0mcompiling 11 Scala sources to /Users/aghurtchumelia/build-your-own-stuff/cut/target/scala-2.13/classes ...[0m
+[0m[[0m[0mdebug[0m] [0m[0mGetting org.scala-sbt:compiler-bridge_2.13:1.9.3:compile for Scala 2.13.11[0m
+[0m[[0m[0minfo[0m] [0m[0mNon-compiled module 'compiler-bridge_2.13' for Scala 2.13.11. Compiling...[0m
+[0m[[0m[0mdebug[0m] [0m[0mCreating plain compiler interface for 2.13.11.[0m
+[0m[[0m[0mdebug[0m] [0m[0m  > Arguments: [0m
+[0m[[0m[0mdebug[0m] [0m[0m	-d[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/zq/wb3lpkw10pn0b1drq2r4w93c0000gq/T/sbt_30b5581f[0m
+[0m[[0m[0mdebug[0m] [0m[0m	-nowarn[0m
+[0m[[0m[0mdebug[0m] [0m[0m	-bootclasspath[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/Users/aghurtchumelia/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.13.11/scala-library-2.13.11.jar[0m
+[0m[[0m[0mdebug[0m] [0m[0m	-classpath[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/Users/aghurtchumelia/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-sbt/compiler-interface/1.9.3/compiler-interface-1.9.3.jar:/Users/aghurtchumelia/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-sbt/util-interface/1.9.2/util-interface-1.9.2.jar:/Users/aghurtchumelia/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-sbt/compiler-bridge_2.13/1.9.3/compiler-bridge_2.13-1.9.3-sources.jar:/Users/aghurtchumelia/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-compiler/2.13.11/scala-compiler-2.13.11.jar:/Users/aghurtchumelia/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-reflect/2.13.11/scala-reflect-2.13.11.jar:/Users/aghurtchumelia/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/io/github/java-diff-utils/java-diff-utils/4.12/java-diff-utils-4.12.jar:/Users/aghurtchumelia/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/jline/jline/3.22.0/jline-3.22.0.jar:/Users/aghurtchumelia/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/net/java/dev/jna/jna/5.13.0/jna-5.13.0.jar[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/zq/wb3lpkw10pn0b1drq2r4w93c0000gq/T/sbt_7949b47b/scala/ZincCompat.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/zq/wb3lpkw10pn0b1drq2r4w93c0000gq/T/sbt_7949b47b/xsbt/API.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/zq/wb3lpkw10pn0b1drq2r4w93c0000gq/T/sbt_7949b47b/xsbt/AbstractZincFile.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/zq/wb3lpkw10pn0b1drq2r4w93c0000gq/T/sbt_7949b47b/xsbt/Analyzer.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/zq/wb3lpkw10pn0b1drq2r4w93c0000gq/T/sbt_7949b47b/xsbt/CallbackGlobal.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/zq/wb3lpkw10pn0b1drq2r4w93c0000gq/T/sbt_7949b47b/xsbt/ClassName.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/zq/wb3lpkw10pn0b1drq2r4w93c0000gq/T/sbt_7949b47b/xsbt/Compat.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/zq/wb3lpkw10pn0b1drq2r4w93c0000gq/T/sbt_7949b47b/xsbt/CompilerBridge.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/zq/wb3lpkw10pn0b1drq2r4w93c0000gq/T/sbt_7949b47b/xsbt/ConsoleBridge.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/zq/wb3lpkw10pn0b1drq2r4w93c0000gq/T/sbt_7949b47b/xsbt/DelegatingReporter.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/zq/wb3lpkw10pn0b1drq2r4w93c0000gq/T/sbt_7949b47b/xsbt/Dependency.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/zq/wb3lpkw10pn0b1drq2r4w93c0000gq/T/sbt_7949b47b/xsbt/ExtractAPI.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/zq/wb3lpkw10pn0b1drq2r4w93c0000gq/T/sbt_7949b47b/xsbt/ExtractUsedNames.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/zq/wb3lpkw10pn0b1drq2r4w93c0000gq/T/sbt_7949b47b/xsbt/GlobalHelpers.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/zq/wb3lpkw10pn0b1drq2r4w93c0000gq/T/sbt_7949b47b/xsbt/InteractiveConsoleBridge.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/zq/wb3lpkw10pn0b1drq2r4w93c0000gq/T/sbt_7949b47b/xsbt/InteractiveConsoleFactoryBridge.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/zq/wb3lpkw10pn0b1drq2r4w93c0000gq/T/sbt_7949b47b/xsbt/InteractiveConsoleHelper.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/zq/wb3lpkw10pn0b1drq2r4w93c0000gq/T/sbt_7949b47b/xsbt/InteractiveConsoleResponse.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/zq/wb3lpkw10pn0b1drq2r4w93c0000gq/T/sbt_7949b47b/xsbt/JarUtils.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/zq/wb3lpkw10pn0b1drq2r4w93c0000gq/T/sbt_7949b47b/xsbt/JavaUtils.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/zq/wb3lpkw10pn0b1drq2r4w93c0000gq/T/sbt_7949b47b/xsbt/LocalToNonLocalClass.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/zq/wb3lpkw10pn0b1drq2r4w93c0000gq/T/sbt_7949b47b/xsbt/LocateClassFile.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/zq/wb3lpkw10pn0b1drq2r4w93c0000gq/T/sbt_7949b47b/xsbt/Log.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/zq/wb3lpkw10pn0b1drq2r4w93c0000gq/T/sbt_7949b47b/xsbt/Message.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/zq/wb3lpkw10pn0b1drq2r4w93c0000gq/T/sbt_7949b47b/xsbt/ScaladocBridge.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m      [0m
+[0m[[0m[0minfo[0m] [0m[0m  Compilation completed in 4.299s.[0m
+[0m[[0m[0mdebug[0m] [0m[0m[zinc] Running cached compiler 50240246 for Scala compiler version 2.13.11[0m
+[0m[[0m[0mdebug[0m] [0m[0m[zinc] The Scala compiler is invoked with:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	-bootclasspath[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/Users/aghurtchumelia/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.13.11/scala-library-2.13.11.jar[0m
+[0m[[0m[0mdebug[0m] [0m[0m	-classpath[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/Users/aghurtchumelia/build-your-own-stuff/cut/target/scala-2.13/classes[0m
+[0m[[0m[0mdebug[0m] [0m[0mScala compilation took 5.9135835 s[0m
+[0m[[0m[0mdebug[0m] [0m[0mdone compiling[0m

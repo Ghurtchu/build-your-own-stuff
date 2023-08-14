@@ -1,0 +1,43 @@
+[0m[[0m[0mdebug[0m] [0m[0mCreated transactional ClassFileManager with tempDir = /Users/aghurtchumelia/build-your-own-stuff/cut/target/scala-2.13/classes.bak[0m
+[0m[[0m[0mdebug[0m] [0m[0mAbout to delete class files:[0m
+[0m[[0m[0mdebug[0m] [0m[0mWe backup class files:[0m
+[0m[[0m[0mdebug[0m] [0m[0mCreated transactional ClassFileManager with tempDir = /Users/aghurtchumelia/build-your-own-stuff/cut/target/scala-2.13/classes.bak[0m
+[0m[[0m[0mdebug[0m] [0m[0mAbout to delete class files:[0m
+[0m[[0m[0mdebug[0m] [0m[0mWe backup class files:[0m
+[0m[[0m[0mdebug[0m] [0m[0mRegistering generated classes:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Regex$Space$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	NumbersParser$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Column.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Dataframe$ColumnRetrievalError$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Row$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	NumbersParser$$anonfun$fromRegex$4.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Regex.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Dataframe$ColumnRetrievalError$NonPositiveIndex$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Position.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	DataframeParser$$anonfun$of$5.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Header$$anonfun$$nestedInanonfun$fromString$1$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Dataframe$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Row.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Position$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Delimiter$Tab$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Regex$Comma$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Main.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	NumbersParser.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Regex$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Column$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Main$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Dataframe$ColumnRetrievalError$TooLargeIndex$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Delimiter$Comma$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Cell.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Dataframe.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Delimiter.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Delimiter$$anonfun$$nestedInanonfun$fromString$1$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Regex$$anonfun$$nestedInanonfun$fromNumbers$1$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Header.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Header$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Delimiter$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	DataframeParser.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	DataframeParser$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Dataframe$ColumnRetrievalError.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Cell$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mRemoving the temporary directory used for backing up class files: /Users/aghurtchumelia/build-your-own-stuff/cut/target/scala-2.13/classes.bak[0m

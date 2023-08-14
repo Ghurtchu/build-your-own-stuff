@@ -4,5 +4,7 @@ ThisBuild / scalaVersion := "2.13.11"
 
 lazy val root = (project in file("."))
   .settings(
-    name := "cut"
+    name := "cut",
+    assembly / mainClass := Some("Main"),
+    assembly / assemblyJarName := "cut.jar",
   )

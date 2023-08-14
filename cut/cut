@@ -1,0 +1,5 @@
+#!/bin/sh
+
+cd ~/build-your-own-stuff/cut/target/scala-2.13/
+
+scala cut.jar $1 $2

@@ -30,7 +30,7 @@ object Main {
         NumbersParser
           .fromRegex(regex)(numbers)
           .map(_.map(dataframe.getColumnByIndex))
-          .fold(println("error"))(_.foreach(println))
+          .fold(println("Unknown error"))(_.foreach(println))
       case _ =>
         Try(numbers.toInt).toOption
           .map(dataframe.getColumnByIndex)
