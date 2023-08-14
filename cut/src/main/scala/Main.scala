@@ -1,5 +1,5 @@
 import domain.{Delimiter, Header, Regex}
-import services.DataframeParser
+import services.{DataframeParser, NumbersParser}
 
 import java.nio.file.{Files, Path}
 import scala.util.{Failure, Success, Try}
@@ -8,52 +8,44 @@ object Main {
   def main(args: Array[String]): Unit =
     args.toList match {
       case s"-f$numbers" :: filename :: Nil =>
-        readFile(filename)
-          .fold(
-            _ => println("file does not exist"),
-            content => {
-              val parser = DataframeParser.ofTab(content)
-              Regex.fromSplittable(numbers) match {
-                case Some(regex) =>
-                  parse(numbers, regex)
-                    .map(_.map(parser.getColumnByIndex))
-                    .foreach(println)
-                case None =>
-                  Try(numbers.toInt).toOption
-                    .map(parser.getColumnByIndex)
-                    .fold(println("Input was not a number"))(
-                      _.fold(e => println(e.msg), println),
-                    )
-              }
-            },
-          )
-      case s"-f$number" :: s"-$delimiterWithValue" :: filename :: Nil =>
-        readFile(filename)
-          .fold(
-            _ => println("file does not exist"),
-            content => {
-              val delimiter = Delimiter
-                .fromString(delimiterWithValue.tail)
-                .getOrElse(Delimiter.Tab)
-              DataframeParser
-                .of(delimiter)(content)
-                .getColumnByIndex(number.toInt)
-                .foreach(println)
-            },
-          )
-
+        val input = loadInputOrFail(filename)
+        val dataframe = DataframeParser.ofTab(input)
+        Regex.fromNumbers(numbers) match {
+          case Some(regex) =>
+            NumbersParser
+              .fromRegex(regex)(numbers)
+              .map(_.map(dataframe.getColumnByIndex))
+              .fold(println("error"))(_.foreach(println))
+          case None =>
+            Try(numbers.toInt).toOption
+              .map(dataframe.getColumnByIndex)
+              .fold(println("Input was not a number"))(
+                _.fold(e => println(e.msg), println),
+              )
+        }
+      case s"-f$numbers" :: s"-d$delimiterWithValue" :: filename :: Nil =>
+        val input = loadInputOrFail(filename)
+        val delimiter = Delimiter
+          .fromString(delimiterWithValue.tail)
+          .getOrElse(Delimiter.Tab)
+        val dataframe = DataframeParser.of(delimiter)(input)
+        Regex.fromNumbers(numbers) match {
+          case Some(regex) =>
+            NumbersParser
+              .fromRegex(regex)(numbers)
+              .map(_.map(dataframe.getColumnByIndex))
+              .fold(println("error"))(_.foreach(println))
+          case None =>
+            Try(numbers.toInt).toOption
+              .map(dataframe.getColumnByIndex)
+              .fold(println("Input was not a number"))(
+                _.fold(e => println(e.msg), println),
+              )
+        }
       case _ => println("Incorrect usage, please refer to manual")
     }
 
-  private def parse(numbers: String, regex: Regex): Option[Array[Int]] = {
-    val nums = numbers.split(regex.repr)
-    val numsParsed = nums.flatMap(n => Try(n.toInt).toOption)
-
-    if (numsParsed.length == nums.length)
-      Some(numsParsed)
-    else None
-  }
-
-  private def readFile(filename: String): Try[String] =
+  private def loadInputOrFail(filename: String): String =
     Try(Files readString (Path of filename))
+      .getOrElse(throw new RuntimeException("File does not exist"))
 }
