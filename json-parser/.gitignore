@@ -7,7 +7,7 @@
 metals.sbt
 /project/*.conf
 .DS_Store
+target/
+project/target/
 
 logs/
-
-slimdown-data.json
