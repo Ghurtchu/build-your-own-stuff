@@ -2,15 +2,15 @@ package services
 
 import domain._
 
-trait Parser extends (String => Dataframe)
+trait DataframeParser extends (String => Dataframe)
 
-object Parser {
+object DataframeParser {
 
-  def ofComma: Parser = of(Delimiter.Comma)
+  def ofComma: DataframeParser = of(Delimiter.Comma)
 
-  def ofTab: Parser = of(Delimiter.Tab)
+  def ofTab: DataframeParser = of(Delimiter.Tab)
 
-  def of(delimiter: Delimiter): Parser =
+  def of(delimiter: Delimiter): DataframeParser =
     (input: String) => {
       val lines = input.split("\n")
       val headers = lines.head

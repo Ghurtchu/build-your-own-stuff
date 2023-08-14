@@ -1,8 +1,8 @@
 import domain.{Delimiter, Header, Regex}
-import services.Parser
+import services.DataframeParser
 
 import java.nio.file.{Files, Path}
-import scala.util.Try
+import scala.util.{Failure, Success, Try}
 
 object Main {
   def main(args: Array[String]): Unit =
@@ -12,19 +12,18 @@ object Main {
           .fold(
             _ => println("file does not exist"),
             content => {
-              val parsedNumbers = for {
-                regex <- Regex.fromSplittable(numbers)
-                parsed <- parse(numbers, regex)
-              } yield parsed
-
-              val parser = Parser.ofTab(content)
-
-              parsedNumbers match {
-                case Some(value) =>
-                  value
-                    .map(parser.getColumnByIndex)
+              val parser = DataframeParser.ofTab(content)
+              Regex.fromSplittable(numbers) match {
+                case Some(regex) =>
+                  parse(numbers, regex)
+                    .map(_.map(parser.getColumnByIndex))
                     .foreach(println)
-                case None => println("xd")
+                case None =>
+                  Try(numbers.toInt).toOption
+                    .map(parser.getColumnByIndex)
+                    .fold(println("Input was not a number"))(
+                      _.fold(e => println(e.msg), println),
+                    )
               }
             },
           )
@@ -36,7 +35,7 @@ object Main {
               val delimiter = Delimiter
                 .fromString(delimiterWithValue.tail)
                 .getOrElse(Delimiter.Tab)
-              Parser
+              DataframeParser
                 .of(delimiter)(content)
                 .getColumnByIndex(number.toInt)
                 .foreach(println)
