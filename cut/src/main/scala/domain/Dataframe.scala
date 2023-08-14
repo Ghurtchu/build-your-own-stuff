@@ -13,8 +13,8 @@ final case class Dataframe(columns: List[Column]) {
     else
       Right {
         val normalizedIndex = index - 1
-        columns(normalizedIndex).header.value :: columns.flatMap { col =>
-          col.values
+        columns(normalizedIndex).header.value :: columns.flatMap {
+          _.values
             .filter(_.position.col == normalizedIndex)
             .map(_.value)
         }
