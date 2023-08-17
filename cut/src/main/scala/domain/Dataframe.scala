@@ -3,7 +3,7 @@ package domain
 import domain.Dataframe.ColumnRetrievalError
 import domain.Dataframe.ColumnRetrievalError.{NonPositiveIndex, TooLargeIndex}
 
-final case class Dataframe(columns: List[Column]) {
+final case class Dataframe(columns: List[Column]) extends AnyVal {
   def getColumnByHeader(header: Header): Option[Column] =
     columns.find(_.header == header)
 
@@ -22,19 +22,22 @@ final case class Dataframe(columns: List[Column]) {
         Column(header, cells)
       }
 
-  def getDataframeByIndices(
+  def getSliceByIndices(
     indices: Int*,
   ): Either[ColumnRetrievalError, Dataframe] = {
-    val columnsAndErrors = indices.map(getColumnByIndex)
+    val columnsOrErrors = indices.map(getColumnByIndex)
 
-    columnsAndErrors
+    columnsOrErrors
       .collectFirst { case Left(error) => Left(error) }
       .getOrElse {
-        Right(Dataframe(columnsAndErrors.collect { case Right(column) =>
-          column
-        }.toList))
+        Right {
+          Dataframe {
+            columnsOrErrors.collect { case Right(column) =>
+              column
+            }.toList
+          }
+        }
       }
-
   }
 
   def display(): Unit = {

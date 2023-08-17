@@ -35,7 +35,7 @@ object Main {
             println("Not a number was spotted, please provide only numbers"),
           ) { indices =>
             dataframe
-              .getDataframeByIndices(indices: _*)
+              .getSliceByIndices(indices: _*)
               .fold(error => println(error.msg), _.display())
           }
       case None =>

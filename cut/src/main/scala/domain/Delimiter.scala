@@ -7,7 +7,6 @@ sealed trait Delimiter {
 }
 
 object Delimiter {
-
   case object Comma extends Delimiter { override def repr: String = "," }
   case object Tab extends Delimiter { override def repr: String = "\t" }
 
