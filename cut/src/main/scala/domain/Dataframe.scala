@@ -22,15 +22,19 @@ final case class Dataframe(columns: List[Column]) {
         Column(header, cells)
       }
 
-  def getDataframeByIndices(indices: Int*): Option[Dataframe] = {
-    val columns = indices
-      .map(getColumnByIndex)
-      .collect { case Right(value) => value }
-      .toList
+  def getDataframeByIndices(
+    indices: Int*,
+  ): Either[ColumnRetrievalError, Dataframe] = {
+    val columnsAndErrors = indices.map(getColumnByIndex)
 
-    Option.when(columns.size == indices.size) {
-      copy(columns = columns)
-    }
+    columnsAndErrors
+      .collectFirst { case Left(error) => Left(error) }
+      .getOrElse {
+        Right(Dataframe(columnsAndErrors.collect { case Right(column) =>
+          column
+        }.toList))
+      }
+
   }
 
   def display(): Unit = {
