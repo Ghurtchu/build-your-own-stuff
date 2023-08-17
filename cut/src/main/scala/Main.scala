@@ -15,7 +15,7 @@ object Main {
       case s"-f$columnNumbers" :: s"-d$delimiterWithValue" :: filename :: Nil =>
         val input = loadInputOrFail(filename)
         val delimiter = Delimiter
-          .fromString(delimiterWithValue.tail)
+          .fromString(delimiterWithValue)
           .getOrElse(Delimiter.Tab)
         val dataframe = DataframeParser.of(delimiter)(input)
 

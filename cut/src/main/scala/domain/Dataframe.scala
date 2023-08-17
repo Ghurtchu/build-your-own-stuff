@@ -2,10 +2,15 @@ package domain
 
 import domain.Dataframe.ColumnRetrievalError
 import domain.Dataframe.ColumnRetrievalError.{NonPositiveIndex, TooLargeIndex}
+import domain.Position.Index.ColumnIndex
 
 final case class Dataframe(columns: List[Column]) extends AnyVal {
+
   def getColumnByHeader(header: Header): Option[Column] =
     columns.find(_.header == header)
+
+  def getColumnByCell(cell: Cell): Option[Column] =
+    columns.find(_.values.contains(cell))
 
   def getColumnByIndex(index: Int): Either[ColumnRetrievalError, Column] =
     if (index <= 0) Left(NonPositiveIndex)
@@ -41,15 +46,30 @@ final case class Dataframe(columns: List[Column]) extends AnyVal {
   }
 
   def display(): Unit = {
+    val longestStringsForEachColumn: Map[Column, Int] =
+      columns
+        .map(column =>
+          column -> column.values
+            .maxBy(_.value.length)
+            .value
+            .length,
+        )
+        .toMap
     val headersAsString = columns
-      .map(_.header.value)
-      .reduce(_ concat "\t" concat _)
+      .foldLeft("") { (acc, column) =>
+        acc concat column.header.value concat " " * (longestStringsForEachColumn(
+          column,
+        ) - column.header.value.length + 1)
+      }
     val columnsAsString =
       columns.head.values.indices.map { index =>
         columns
           .flatMap(_.values.find(_.position.rowIndex.value == index))
-          .map(_.toString)
-          .reduce(_ concat "\t" concat _)
+          .foldLeft("") { (acc, cell) =>
+            acc concat cell.value concat " " * (longestStringsForEachColumn(
+              getColumnByCell(cell).get,
+            ) - cell.value.length + 1)
+          }
       }.toList
 
     (headersAsString :: columnsAsString)
