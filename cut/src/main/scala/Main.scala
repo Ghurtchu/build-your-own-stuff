@@ -27,17 +27,12 @@ object Main {
   ): Unit =
     Regex.from(numbers) match {
       case Some(regex) =>
-        val parser = NumbersParser
-          .fromRegex(regex)
-        val parsedColumnNumbers = parser(numbers)
-
-        parsedColumnNumbers
-          .map(numbers => dataframe.getDataframeByIndices(numbers: _*))
-          .foreach {
-            case Some(value) => value.display()
-            case None => println("xd")
-          }
-
+        NumbersParser
+          .fromRegex(regex)(numbers)
+          .flatMap(indices => dataframe.getDataframeByIndices(indices: _*))
+          .fold(println("Index out of bounds, please select correct indices"))(
+            _.display(),
+          )
       case _ =>
         Try(numbers.toInt).toOption
           .map(dataframe.getColumnByIndex)

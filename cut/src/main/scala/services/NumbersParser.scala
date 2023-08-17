@@ -12,8 +12,6 @@ object NumbersParser {
       val nums = numbers.split(regex.repr)
       val numsParsed = nums.flatMap(n => Try(n.toInt).toOption)
 
-      if (numsParsed.length == nums.length)
-        Some(numsParsed)
-      else None
+      Option.when(numsParsed.length == nums.length)(numsParsed)
     }
 }

@@ -6,5 +6,4 @@ final case class Column(header: Header, values: List[Cell]) {
       values
         .map(_.value)
         .reduce(_ concat "\n" concat _)
-        .init
 }

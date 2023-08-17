@@ -25,11 +25,11 @@ final case class Dataframe(columns: List[Column]) {
   def getDataframeByIndices(indices: Int*): Option[Dataframe] = {
     val columns = indices
       .map(getColumnByIndex)
-      .collect { case Right(column) => Right(column) }
+      .collect { case Right(value) => value }
       .toList
 
     Option.when(columns.size == indices.size) {
-      copy(columns = columns.flatMap(_.toOption))
+      copy(columns = columns)
     }
   }
 
