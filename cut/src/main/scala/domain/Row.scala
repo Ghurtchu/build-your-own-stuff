@@ -1,5 +1,8 @@
 package domain
 
 final case class Row(values: List[Cell]) {
-  def index: Int = values.head.position.row
+  override def toString: String =
+    values.foldLeft[String]("") { (str, cell) =>
+      str concat "\t" concat cell.value
+    }
 }

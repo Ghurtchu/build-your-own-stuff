@@ -1,5 +1,7 @@
 package domain
 
+import PartialFunction.condOpt
+
 sealed trait Delimiter {
   def repr: String
 }
@@ -10,7 +12,7 @@ object Delimiter {
   case object Tab extends Delimiter { override def repr: String = "\t" }
 
   def fromString: String => Option[Delimiter] =
-    PartialFunction.condOpt(_) {
+    condOpt(_) {
       case "," => Comma
       case "\t" => Tab
     }

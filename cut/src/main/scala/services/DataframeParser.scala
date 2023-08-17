@@ -2,7 +2,7 @@ package services
 
 import domain._
 
-trait DataframeParser extends (String => Dataframe)
+trait DataframeParser extends Parser[String, Dataframe]
 
 object DataframeParser {
 

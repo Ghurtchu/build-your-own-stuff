@@ -1,36 +1,43 @@
-import domain.{Dataframe, Delimiter, Header, Regex}
+import domain.{Dataframe, Delimiter, Regex}
 import services.{DataframeParser, NumbersParser}
 
 import java.nio.file.{Files, Path}
-import scala.util.{Failure, Success, Try}
+import scala.util.Try
 
 object Main {
   def main(args: Array[String]): Unit =
     args.toList match {
-      case s"-f$numbers" :: filename :: Nil =>
-        val input = loadInputOrFail(filename)
+      case s"-f$columnNumbers" :: filename :: Nil =>
+        val input = loadOrFail(filename)
         val dataframe = DataframeParser.ofTab(input)
-        parseNumbersAndlogResult(numbers, dataframe)
-      case s"-f$numbers" :: s"-d$delimiterWithValue" :: filename :: Nil =>
-        val input = loadInputOrFail(filename)
+        parseNumbersAndLogResult(columnNumbers, dataframe)
+      case s"-f$columnNumbers" :: s"-d$delimiterWithValue" :: filename :: Nil =>
+        val input = loadOrFail(filename)
         val delimiter = Delimiter
           .fromString(delimiterWithValue.tail)
           .getOrElse(Delimiter.Tab)
         val dataframe = DataframeParser.of(delimiter)(input)
-        parseNumbersAndlogResult(numbers, dataframe)
+        parseNumbersAndLogResult(columnNumbers, dataframe)
       case _ => println("Incorrect usage, please refer to manual")
     }
 
-  private def parseNumbersAndlogResult(
+  private def parseNumbersAndLogResult(
     numbers: String,
     dataframe: Dataframe,
   ): Unit =
-    Regex.fromNumbers(numbers) match {
+    Regex.from(numbers) match {
       case Some(regex) =>
-        NumbersParser
-          .fromRegex(regex)(numbers)
-          .map(_.map(dataframe.getColumnByIndex))
-          .fold(println("Unknown error"))(_.foreach(println))
+        val parser = NumbersParser
+          .fromRegex(regex)
+        val parsedColumnNumbers = parser(numbers)
+
+        parsedColumnNumbers
+          .map(numbers => dataframe.getDataframeByIndices(numbers: _*))
+          .foreach {
+            case Some(value) => value.display()
+            case None => println("xd")
+          }
+
       case _ =>
         Try(numbers.toInt).toOption
           .map(dataframe.getColumnByIndex)
@@ -39,7 +46,7 @@ object Main {
           )
     }
 
-  private def loadInputOrFail(filename: String): String =
+  private def loadOrFail(filename: String): String =
     Try(Files readString (Path of filename))
       .getOrElse(throw new RuntimeException("File does not exist"))
 }

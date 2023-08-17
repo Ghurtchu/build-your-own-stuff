@@ -4,7 +4,7 @@ import domain.Regex
 
 import scala.util.Try
 
-trait NumbersParser extends (String => Option[Array[Int]])
+trait NumbersParser extends Parser[String, Option[Array[Int]]]
 
 object NumbersParser {
   def fromRegex(regex: Regex): NumbersParser =
