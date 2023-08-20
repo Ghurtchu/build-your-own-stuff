@@ -1,5 +1,5 @@
 import domain.{Dataframe, Delimiter, Regex}
-import services.{DataframeParser, NumbersParser}
+import services.{DataframeParser, LoadInput, NumbersParser}
 
 import java.nio.file.{Files, Path}
 import scala.util.Try
@@ -8,16 +8,24 @@ object Main {
   def main(args: Array[String]): Unit =
     args.toList match {
       case s"-f$columnNumbers" :: s"-d$delimiterStr" :: filename :: Nil =>
-        val delimiter = Delimiter
-          .fromString(delimiterStr)
-          .getOrElse(Delimiter.Tab)
-        val dataframe = Dataframe
-          .of(filename, DataframeParser.of(delimiter))
-        process(columnNumbers, dataframe)
+        Dataframe
+          .of(
+            LoadInput.from(filename),
+            DataframeParser.of(
+              Delimiter
+                .fromString(delimiterStr)
+                .getOrElse(Delimiter.Tab),
+            ),
+          )
+          .fold(println("Could not construct Dataframe"))(
+            process(columnNumbers, _),
+          )
       case s"-f$columnNumbers" :: filename :: Nil =>
-        val dataframe = Dataframe
-          .of(filename, DataframeParser.ofTab)
-        process(columnNumbers, dataframe)
+        Dataframe
+          .of(LoadInput.from(filename), DataframeParser.ofTab)
+          .fold(println("Could not construct Dataframe"))(
+            process(columnNumbers, _),
+          )
       case _ => println("Incorrect usage, please refer to manual")
     }
 

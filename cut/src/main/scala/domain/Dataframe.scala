@@ -92,13 +92,6 @@ object Dataframe {
     }
   }
 
-  def of(filename: String, parser: DataframeParser): Dataframe =
-    parser(loadInputOrFail(filename))
-      .getOrElse(
-        throw new RuntimeException("Could not construct the dataframe"),
-      )
-
-  private def loadInputOrFail(filename: String): String =
-    Try(Files readString (Path of filename))
-      .getOrElse(throw new RuntimeException("File does not exist"))
+  def of(input: String, parser: DataframeParser): Option[Dataframe] =
+    parser(input)
 }
