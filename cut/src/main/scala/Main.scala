@@ -7,23 +7,25 @@ import scala.util.Try
 object Main {
   def main(args: Array[String]): Unit =
     args.toList match {
-      case s"-f$columnNumbers" :: filename :: Nil =>
-        val input = loadInputOrFail(filename)
-        val dataframe = DataframeParser.ofTab(input)
-
-        parseAndLogResult(columnNumbers, dataframe)
-      case s"-f$columnNumbers" :: s"-d$delimiterWithValue" :: filename :: Nil =>
+      case s"-f$columnNumbers" :: s"-d$delimiterStr" :: filename :: Nil =>
         val input = loadInputOrFail(filename)
         val delimiter = Delimiter
-          .fromString(delimiterWithValue)
+          .fromString(delimiterStr)
           .getOrElse(Delimiter.Tab)
-        val dataframe = DataframeParser.of(delimiter)(input)
+        val parser = DataframeParser.of(delimiter)
+        val dataframe = parser(input)
 
-        parseAndLogResult(columnNumbers, dataframe)
+        process(columnNumbers, dataframe)
+      case s"-f$columnNumbers" :: filename :: Nil =>
+        val input = loadInputOrFail(filename)
+        val parser = DataframeParser.ofTab
+        val dataframe = parser(input)
+
+        process(columnNumbers, dataframe)
       case _ => println("Incorrect usage, please refer to manual")
     }
 
-  private def parseAndLogResult(
+  private def process(
     columnNumbers: String,
     dataframe: Dataframe,
   ): Unit =

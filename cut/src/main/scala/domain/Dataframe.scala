@@ -2,7 +2,6 @@ package domain
 
 import domain.Dataframe.ColumnRetrievalError
 import domain.Dataframe.ColumnRetrievalError.{NonPositiveIndex, TooLargeIndex}
-import domain.Position.Index.ColumnIndex
 
 final case class Dataframe(columns: List[Column]) extends AnyVal {
 

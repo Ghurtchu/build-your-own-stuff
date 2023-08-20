@@ -7,11 +7,11 @@ sealed trait Regex {
 
 object Regex {
   case object Comma extends Regex { override def repr: String = "," }
-  case object Space extends Regex { override def repr: String = "\t" }
+  case object Space extends Regex { override def repr: String = " " }
 
   def from: String => Option[Regex] =
     condOpt(_) {
       case s if s.contains(",") => Comma
-      case s if s.contains("\t") => Space
+      case s if s.contains(" ") => Space
     }
 }
