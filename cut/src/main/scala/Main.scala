@@ -1,5 +1,5 @@
 import domain.{Dataframe, Delimiter, Regex}
-import services.{DataframeParser, NumbersParser}
+import services.{DataframeParser, NumbersParser, DataframeBuilder}
 
 import java.nio.file.{Files, Path}
 import scala.util.Try
@@ -8,24 +8,16 @@ object Main {
   def main(args: Array[String]): Unit =
     args.toList match {
       case s"-f$columnNumbers" :: s"-d$delimiterStr" :: filename :: Nil =>
-        val input = loadInputOrFail(filename)
         val delimiter = Delimiter
           .fromString(delimiterStr)
           .getOrElse(Delimiter.Tab)
-        val parser = DataframeParser.of(delimiter)
-        val dataframe = parser(input)
-          .getOrElse(
-            throw new RuntimeException("Could not construct the dataframe"),
-          )
+        val dataframe = DataframeBuilder
+          .of(DataframeParser.of(delimiter))(filename)
 
         process(columnNumbers, dataframe)
       case s"-f$columnNumbers" :: filename :: Nil =>
-        val input = loadInputOrFail(filename)
-        val parser = DataframeParser.ofTab
-        val dataframe = parser(input)
-          .getOrElse(
-            throw new RuntimeException("Could not construct the dataframe"),
-          )
+        val dataframe = DataframeBuilder
+          .of(DataframeParser.ofTab)(filename)
 
         process(columnNumbers, dataframe)
       case _ => println("Incorrect usage, please refer to manual")
@@ -54,8 +46,4 @@ object Main {
               .fold(error => println(error.msg), println)
           }
     }
-
-  private def loadInputOrFail(filename: String): String =
-    Try(Files readString (Path of filename))
-      .getOrElse(throw new RuntimeException("File does not exist"))
 }
