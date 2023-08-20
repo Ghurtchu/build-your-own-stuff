@@ -2,6 +2,8 @@ package services
 
 import domain._
 
+import scala.util.Try
+
 trait DataframeParser extends Parser[Dataframe]
 
 object DataframeParser {
@@ -16,16 +18,26 @@ object DataframeParser {
       val headers = lines.head
         .split(delimiter.repr)
         .map(_.replaceAll("[\uFEFF-\uFFFF]", ""))
-      val rows = lines.tail.zipWithIndex.map { case (rowAsString, rowIndex) =>
-        createRow(rowAsString, rowIndex, headers.indices, delimiter)
-      }
-      val columns = headers.zipWithIndex.map { case (header, index) =>
-        createColumn(header, index, rows.toList)
-      }.toList
+      Option
+        .when(lines.length > 1) {
+          val rows = lines.tail.zipWithIndex.map {
+            case (rowAsString, rowIndex) =>
+              createRow(rowAsString, rowIndex, headers.indices, delimiter)
+          }
+          val columns = headers.zipWithIndex.map { case (header, index) =>
+            createColumn(header, index, rows.toList)
+          }.toList
+          val isRowsDimensionsCorrect =
+            rows.forall(_.values.length == headers.length)
+          val columnCount = lines.length - 1
+          val isColumnsDimensionsCorrect =
+            columns.forall(_.values.length == columnCount)
 
-      Option.when {
-        headers.length == rows.head.values.length && columns.head.values.length + 1 == lines.length
-      }(Dataframe(columns))
+          Option.when(isRowsDimensionsCorrect && isColumnsDimensionsCorrect) {
+            Dataframe(columns)
+          }
+        }
+        .flatten
     }
 
   private def createRow(

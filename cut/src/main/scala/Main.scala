@@ -1,5 +1,5 @@
 import domain.{Dataframe, Delimiter, Regex}
-import services.{DataframeParser, NumbersParser, DataframeBuilder}
+import services.{DataframeParser, NumbersParser}
 
 import java.nio.file.{Files, Path}
 import scala.util.Try
