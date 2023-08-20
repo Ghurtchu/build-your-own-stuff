@@ -1,5 +1,5 @@
 #!/bin/sh
 
-cd ~/build-your-own-stuff/json-parser/target/scala-2.13/
+cd ~/build-your-own-stuff/json-parser
 
 scala json-parser.jar $1
