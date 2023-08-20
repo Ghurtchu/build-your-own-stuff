@@ -2,6 +2,10 @@ package domain
 
 import domain.Dataframe.ColumnRetrievalError
 import domain.Dataframe.ColumnRetrievalError.{NonPositiveIndex, TooLargeIndex}
+import services.DataframeParser
+
+import java.nio.file.{Files, Path}
+import scala.util.Try
 
 final case class Dataframe(columns: List[Column]) extends AnyVal {
 
@@ -87,4 +91,14 @@ object Dataframe {
       override def msg: String = "Index was too large"
     }
   }
+
+  def of(filename: String, parser: DataframeParser): Dataframe =
+    parser(loadInputOrFail(filename))
+      .getOrElse(
+        throw new RuntimeException("Could not construct the dataframe"),
+      )
+
+  private def loadInputOrFail(filename: String): String =
+    Try(Files readString (Path of filename))
+      .getOrElse(throw new RuntimeException("File does not exist"))
 }

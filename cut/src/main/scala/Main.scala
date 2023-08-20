@@ -11,14 +11,12 @@ object Main {
         val delimiter = Delimiter
           .fromString(delimiterStr)
           .getOrElse(Delimiter.Tab)
-        val dataframe = DataframeBuilder
-          .of(DataframeParser.of(delimiter))(filename)
-
+        val dataframe = Dataframe
+          .of(filename, DataframeParser.of(delimiter))
         process(columnNumbers, dataframe)
       case s"-f$columnNumbers" :: filename :: Nil =>
-        val dataframe = DataframeBuilder
-          .of(DataframeParser.ofTab)(filename)
-
+        val dataframe = Dataframe
+          .of(filename, DataframeParser.ofTab)
         process(columnNumbers, dataframe)
       case _ => println("Incorrect usage, please refer to manual")
     }
