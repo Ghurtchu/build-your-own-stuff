@@ -1,6 +1,7 @@
 package services
 
 import domain.Regex
+import Option.when
 
 import scala.util.Try
 
@@ -13,6 +14,6 @@ object NumbersParser {
       val nums = numbers.split(regex.repr)
       val numsParsed = nums.flatMap(n => Try(n.toInt).toOption)
 
-      Option.when(numsParsed.length == nums.length)(numsParsed)
+      when(numsParsed.length == nums.length)(numsParsed)
     }
 }
