@@ -14,12 +14,18 @@ object Main {
           .getOrElse(Delimiter.Tab)
         val parser = DataframeParser.of(delimiter)
         val dataframe = parser(input)
+          .getOrElse(
+            throw new RuntimeException("Could not construct the dataframe"),
+          )
 
         process(columnNumbers, dataframe)
       case s"-f$columnNumbers" :: filename :: Nil =>
         val input = loadInputOrFail(filename)
         val parser = DataframeParser.ofTab
         val dataframe = parser(input)
+          .getOrElse(
+            throw new RuntimeException("Could not construct the dataframe"),
+          )
 
         process(columnNumbers, dataframe)
       case _ => println("Incorrect usage, please refer to manual")

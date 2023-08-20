@@ -2,7 +2,7 @@ package services
 
 import domain._
 
-trait DataframeParser extends Parser[String, Dataframe]
+trait DataframeParser extends Parser[Dataframe]
 
 object DataframeParser {
 
@@ -23,7 +23,9 @@ object DataframeParser {
         createColumn(header, index, rows.toList)
       }.toList
 
-      Dataframe(columns)
+      Option.when {
+        headers.length == rows.head.values.length && columns.head.values.length + 1 == lines.length
+      }(Dataframe(columns))
     }
 
   private def createRow(
