@@ -8,15 +8,11 @@ object Main {
   def main(args: Array[String]): Unit =
     args.toList match {
       case s"-f$columnNumbers" :: s"-d$delimiterStr" :: filename :: Nil =>
+        val delimiter = Delimiter
+          .fromString(delimiterStr)
+          .getOrElse(Delimiter.Tab)
         Dataframe
-          .of(
-            LoadInput.from(filename),
-            DataframeParser.of(
-              Delimiter
-                .fromString(delimiterStr)
-                .getOrElse(Delimiter.Tab),
-            ),
-          )
+          .of(LoadInput.from(filename), DataframeParser.of(delimiter))
           .fold(println("Could not construct Dataframe"))(
             process(columnNumbers, _),
           )
