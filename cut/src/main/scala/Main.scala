@@ -1,7 +1,10 @@
 import domain.{Dataframe, Delimiter, Regex}
-import services.{DataframeParser, LoadInput, NumbersParser}
-
-import java.nio.file.{Files, Path}
+import services.{
+  DataframeParser,
+  LoadInputFromFile,
+  LoadInputFromStdIn,
+  NumbersParser,
+}
 import scala.util.Try
 
 object Main {
@@ -12,16 +15,23 @@ object Main {
           .fromString(delimiterStr)
           .getOrElse(Delimiter.Tab)
         Dataframe
-          .of(LoadInput.from(filename), DataframeParser.of(delimiter))
+          .of(LoadInputFromFile.from(filename), DataframeParser.of(delimiter))
           .fold(println("Could not construct Dataframe"))(
             process(columnNumbers, _),
           )
       case s"-f$columnNumbers" :: filename :: Nil =>
         Dataframe
-          .of(LoadInput.from(filename), DataframeParser.ofTab)
+          .of(LoadInputFromFile.from(filename), DataframeParser.ofTab)
           .fold(println("Could not construct Dataframe"))(
             process(columnNumbers, _),
           )
+      case s"-d$delimiterStr" :: s"-f$columnNumbers" :: Nil =>
+        val delimiter = Delimiter
+          .fromString(delimiterStr)
+          .getOrElse(Delimiter.Tab)
+        Dataframe
+          .of(LoadInputFromStdIn.of.apply, DataframeParser.of(delimiter))
+          .fold(println("boom"))(process(columnNumbers, _))
       case _ => println("Incorrect usage, please refer to manual")
     }
 
