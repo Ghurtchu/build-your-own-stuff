@@ -11,42 +11,41 @@ object Main {
   def main(args: Array[String]): Unit =
     args.toList match {
       case s"-f$columnNumbers" :: s"-d$delimiterStr" :: filename :: Nil =>
-        loadInputAndThenProcess(
-          delimiterStr,
+        buildDataframeAndThenProcess(
+          Delimiter
+            .fromString(delimiterStr)
+            .getOrElse(Delimiter.Tab),
           columnNumbers,
           LoadInputFromFile.from(filename),
         )
       case s"-f$columnNumbers" :: filename :: Nil =>
-        Dataframe
-          .of(LoadInputFromFile.from(filename), DataframeParser.ofTab)
-          .fold(println("Could not construct Dataframe"))(
-            process(columnNumbers, _),
-          )
+        buildDataframeAndThenProcess(
+          Delimiter.Tab,
+          columnNumbers,
+          LoadInputFromFile.from(filename),
+        )
       case s"-d$delimiterStr" :: s"-f$columnNumbers" :: Nil =>
-        loadInputAndThenProcess(
-          delimiterStr,
+        buildDataframeAndThenProcess(
+          Delimiter
+            .fromString(delimiterStr)
+            .getOrElse(Delimiter.Tab),
           columnNumbers,
           LoadInputFromStdIn.of.apply,
         )
       case _ => println("Incorrect usage, please refer to manual")
     }
 
-  private def loadInputAndThenProcess(
-    delimiterStr: String,
+  private def buildDataframeAndThenProcess(
+    delimiter: Delimiter,
     columnNumbers: String,
     input: => String,
-  ): Unit = {
-    val delimiter = Delimiter
-      .fromString(delimiterStr)
-      .getOrElse(Delimiter.Tab)
-    Dataframe
-      .of(input, DataframeParser.of(delimiter))
-      .fold(println("Could not construct Dataframe"))(
-        process(columnNumbers, _),
-      )
-  }
+  ): Unit = Dataframe
+    .of(input, DataframeParser.of(delimiter))
+    .fold(println("Could not construct Dataframe"))(
+      sliceAndDiceAndShow(columnNumbers, _),
+    )
 
-  private def process(
+  private def sliceAndDiceAndShow(
     columnNumbers: String,
     dataframe: Dataframe,
   ): Unit =
