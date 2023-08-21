@@ -15,11 +15,11 @@ object DataframeParser {
   def of(delimiter: Delimiter): DataframeParser =
     (input: String) => {
       val lines = input.split("\n")
-      val headers = lines.head
-        .split(delimiter.repr)
-        .map(_.replaceAll("[\uFEFF-\uFFFF]", ""))
       Option
         .when(lines.length > 1) {
+          val headers = lines.head
+            .split(delimiter.repr)
+            .map(_.replaceAll("[\uFEFF-\uFFFF]", ""))
           val rows = lines.tail.zipWithIndex.map {
             case (rowAsString, rowIndex) =>
               createRow(rowAsString, rowIndex, headers.indices, delimiter)
