@@ -13,8 +13,7 @@ object Main {
       case s"-f$columnNumbers" :: s"-d$delimiterStr" :: filename :: Nil =>
         buildDataframeAndThenProcess(
           Delimiter
-            .fromString(delimiterStr)
-            .getOrElse(Delimiter.Tab),
+            .fromStringOrElse(delimiterStr, Delimiter.Tab),
           columnNumbers,
           LoadInputFromFile.from(filename),
         )
@@ -27,8 +26,7 @@ object Main {
       case s"-d$delimiterStr" :: s"-f$columnNumbers" :: Nil =>
         buildDataframeAndThenProcess(
           Delimiter
-            .fromString(delimiterStr)
-            .getOrElse(Delimiter.Tab),
+            .fromStringOrElse(delimiterStr, Delimiter.Tab),
           columnNumbers,
           LoadInputFromStdIn.of.apply,
         )

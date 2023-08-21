@@ -16,7 +16,7 @@ object Delimiter {
       case "\t" => Tab
     }
 
-  def getOrElse(
+  def fromStringOrElse(
     delimiter: String,
     default: Delimiter,
   ): Delimiter =
