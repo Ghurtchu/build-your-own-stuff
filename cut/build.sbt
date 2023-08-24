@@ -7,4 +7,5 @@ lazy val root = (project in file("."))
     name := "cut",
     assembly / mainClass := Some("Main"),
     assembly / assemblyJarName := "cut.jar",
+    libraryDependencies ++= Seq(Dependencies.Testing.Munit),
   )

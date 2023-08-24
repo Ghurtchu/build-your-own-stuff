@@ -5,7 +5,7 @@ import Option.when
 
 import scala.util.Try
 
-trait NumbersParser extends Parser[Array[Int]]
+trait NumbersParser extends Parser[List[Int]]
 
 object NumbersParser {
 
@@ -14,6 +14,6 @@ object NumbersParser {
       val nums = numbers.split(regex.repr)
       val numsParsed = nums.flatMap(n => Try(n.toInt).toOption)
 
-      when(numsParsed.length == nums.length)(numsParsed)
+      when(numsParsed.length == nums.length)(numsParsed.toList)
     }
 }

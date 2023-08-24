@@ -2,9 +2,7 @@ package domain
 
 import PartialFunction.condOpt
 
-sealed trait Delimiter {
-  def repr: String
-}
+sealed trait Delimiter { def repr: String }
 
 object Delimiter {
   case object Comma extends Delimiter { override def repr: String = "," }

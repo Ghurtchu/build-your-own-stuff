@@ -1,13 +1,8 @@
 import domain.{Dataframe, Delimiter, Regex}
-import services.{
-  DataframeParser,
-  LoadInputFromFile,
-  LoadInputFromStdIn,
-  NumbersParser,
-}
+import services.{DataframeParser, LoadInput, NumbersParser}
 import scala.util.Try
 
-object Main {
+object  Main {
   def main(args: Array[String]): Unit =
     args.toList match {
       case s"-f$columnNumbers" :: s"-d$delimiterStr" :: filename :: Nil =>
@@ -15,20 +10,20 @@ object Main {
           Delimiter
             .fromStringOrElse(delimiterStr, Delimiter.Tab),
           columnNumbers,
-          LoadInputFromFile.from(filename),
+          LoadInput.fromFile(filename).load,
         )
       case s"-f$columnNumbers" :: filename :: Nil =>
         buildDataframeAndThenProcess(
           Delimiter.Tab,
           columnNumbers,
-          LoadInputFromFile.from(filename),
+          LoadInput.fromFile(filename).load,
         )
       case s"-d$delimiterStr" :: s"-f$columnNumbers" :: Nil =>
         buildDataframeAndThenProcess(
           Delimiter
             .fromStringOrElse(delimiterStr, Delimiter.Tab),
           columnNumbers,
-          LoadInputFromStdIn.of.apply,
+          LoadInput.fromStdIn.load,
         )
       case _ => println("Incorrect usage, please refer to manual")
     }

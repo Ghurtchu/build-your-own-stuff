@@ -2,8 +2,6 @@ package services
 
 import domain._
 
-import scala.util.Try
-
 trait DataframeParser extends Parser[Dataframe]
 
 object DataframeParser {
@@ -22,14 +20,14 @@ object DataframeParser {
             .map(_.replaceAll("[\uFEFF-\uFFFF]", ""))
           val rows = lines.tail.zipWithIndex.map {
             case (rowAsString, rowIndex) =>
-              createRow(rowAsString, rowIndex, headers.indices, delimiter)
+              row(rowAsString, rowIndex, headers.indices, delimiter)
           }
           val columns = headers.zipWithIndex.map { case (header, index) =>
-            createColumn(header, index, rows.toList)
+            column(header, index, rows.toList)
           }.toList
           val isRowsDimensionsCorrect =
             rows.forall(_.values.length == headers.length)
-          val columnCount = lines.length - 1
+          val columnCount = lines.length - 1 // minus header
           val isColumnsDimensionsCorrect =
             columns.forall(_.values.length == columnCount)
 
@@ -40,7 +38,7 @@ object DataframeParser {
         .flatten
     }
 
-  private def createRow(
+  private def row(
     rowAsString: String,
     rowIndex: Int,
     indexRange: Range,
@@ -51,26 +49,18 @@ object DataframeParser {
         .split(delimiter.repr)
         .zip(indexRange)
         .map { case (rowValue, columnIndex) =>
-          createCell(rowValue, columnIndex, rowIndex)
+          cell(rowValue, columnIndex, rowIndex)
         }
         .toList
     }
 
-  private def createCell(
-    rowValue: String,
-    columnIndex: Int,
-    rowIndex: Int,
-  ): Cell =
+  private def cell(rowValue: String, columnIndex: Int, rowIndex: Int): Cell =
     Cell(
       Position.from(rowIndex, columnIndex).getOrElse(Position.zero),
       rowValue,
     )
 
-  private def createColumn(
-    header: String,
-    index: Int,
-    rows: List[Row],
-  ): Column =
+  private def column(header: String, index: Int, rows: List[Row]): Column =
     Column(Header(header), rows.map(_.values(index)))
 
 }
