@@ -1,12 +1,10 @@
 package controllers
 
+import domain.Servers
+
 import javax.inject._
 import play.api.mvc._
 import play.api.libs.ws._
-
-import scala.concurrent.Future
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.util.{Failure, Success}
 
 /**
  * This controller creates an `Action` to handle HTTP requests to the
@@ -14,6 +12,15 @@ import scala.util.{Failure, Success}
  */
 @Singleton
 class Main @Inject()(ws: WSClient, val controllerComponents: ControllerComponents) extends BaseController {
+
+
+  val servers = Servers(
+    List(
+      "http://localhost:9001/all",
+      "http://localhost:9002/all",
+      "http://localhost:9003/all"
+    )
+  )
 
   /**
    * Create an Action to render an HTML page.
@@ -28,11 +35,12 @@ class Main @Inject()(ws: WSClient, val controllerComponents: ControllerComponent
     println(s"Host: ${request.host}")
     println(s"User-Agent: ${request.headers}")
 
-    val url = "http://localhost:9001/all"
+    val url = servers.next
+    println(s"sending request to $url")
     val req: WSRequest = ws.url(url)
       .withBody(request.body.toString)
 
-    req.execute.map { wsResponse => Ok(wsResponse.body) }
+    req.execute.map { wsResponse => Ok(wsResponse.body) } (controllerComponents.executionContext)
   }
 
   def getNumbers: Action[AnyContent] = Action { _ =>
