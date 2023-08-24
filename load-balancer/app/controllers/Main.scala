@@ -28,11 +28,6 @@ class Main @Inject()(ws: WSClient, val controllerComponents: ControllerComponent
    * a path of `/`.
    */
   def index: Action[AnyContent] = Action.async { implicit request: Request[AnyContent] =>
-    println(s"Received request from $request")
-    println(s"${request.method}")
-    println(s"Host: ${request.host}")
-    println(s"User-Agent: ${request.headers}")
-
     val url = servers.next
     println(s"sending request to $url")
     val req: WSRequest = ws.url(url)
