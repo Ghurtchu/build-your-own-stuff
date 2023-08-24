@@ -1,8 +1,12 @@
 package controllers
 
 import javax.inject._
-import play.api._
 import play.api.mvc._
+import play.api.libs.ws._
+
+import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.util.{Failure, Success}
 
 /**
  * This controller creates an `Action` to handle HTTP requests to the
@@ -18,14 +22,21 @@ class Main @Inject()(ws: WSClient, val controllerComponents: ControllerComponent
    * will be called when the application receives a `GET` request with
    * a path of `/`.
    */
-  def index: Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
+  def index: Action[AnyContent] = Action.async { implicit request: Request[AnyContent] =>
     println(s"Received request from $request")
     println(s"${request.method}")
     println(s"Host: ${request.host}")
     println(s"User-Agent: ${request.headers}")
 
+    val url = "http://localhost:9001/all"
+    val req: WSRequest = ws.url(url)
+      .withBody(request.body.toString)
 
-    NoContent
+    val resp: Future[WSResponse] = req.get()
+
+    resp.map { wsResponse =>
+      Ok(wsResponse.body)
+    }
   }
 
   def getNumbers: Action[AnyContent] = Action { _ =>
