@@ -32,11 +32,7 @@ class Main @Inject()(ws: WSClient, val controllerComponents: ControllerComponent
     val req: WSRequest = ws.url(url)
       .withBody(request.body.toString)
 
-    val resp: Future[WSResponse] = req.get()
-
-    resp.map { wsResponse =>
-      Ok(wsResponse.body)
-    }
+    req.execute.map { wsResponse => Ok(wsResponse.body) }
   }
 
   def getNumbers: Action[AnyContent] = Action { _ =>
