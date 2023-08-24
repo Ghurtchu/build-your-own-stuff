@@ -1,9 +1,16 @@
 package domain
-final case class Servers (private var values: List[String]) {
-  def next: String = {
-    val value = values.head
-    values = values.tail :+ value
+final case class Servers private (private var uris: List[String]) {
 
-    value
+  def next: String = {
+    val nextUri = uris.head
+    uris = uris.tail :+ nextUri
+
+    nextUri
   }
+}
+
+object Servers {
+  def from(uris: String*): Servers =
+    Option.when(uris.length >= 2)(Servers(uris.toList))
+      .getOrElse(throw new RuntimeException("You must provide at least two uris for servers"))
 }

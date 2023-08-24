@@ -13,13 +13,11 @@ import play.api.libs.ws._
 @Singleton
 class Main @Inject()(ws: WSClient, val controllerComponents: ControllerComponents) extends BaseController {
 
-
-  val servers = Servers(
-    List(
-      "http://localhost:9001/all",
+  // thread unsafe
+  val servers = Servers.from(
+    "http://localhost:9001/all",
       "http://localhost:9002/all",
       "http://localhost:9003/all"
-    )
   )
 
   /**
