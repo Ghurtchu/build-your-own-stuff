@@ -1,2 +1,0 @@
-# Main
-GET / controllers.LoadBalancer.run
