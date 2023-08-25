@@ -2,7 +2,7 @@ import domain.{Dataframe, Delimiter, Regex}
 import services.{DataframeParser, LoadInput, NumbersParser}
 import scala.util.Try
 
-object  Main {
+object Main {
   def main(args: Array[String]): Unit =
     args.toList match {
       case s"-f$columnNumbers" :: s"-d$delimiterStr" :: filename :: Nil =>
