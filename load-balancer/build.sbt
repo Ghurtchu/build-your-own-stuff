@@ -1,4 +1,4 @@
-name := """load-balancer"""
+name := "load-balancer"
 organization := "com.ghurtchu"
 
 version := "1.0-SNAPSHOT"
