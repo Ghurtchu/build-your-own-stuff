@@ -16,6 +16,7 @@ final case class Backends private(urls: Vector[String]) extends AnyVal {
 object Backends {
 
   import Option._
+
   def apply(urls: String*): Backends =
     when(urls.length >= 2)(new Backends(urls.toVector))
       .getOrElse(throw new RuntimeException("at least two urls must be provided"))

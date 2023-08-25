@@ -23,7 +23,7 @@ object LoadbalancerRoutes {
     }
   }
 
-  def helloRoute: HttpRoutes[IO] = {
+  def helloRoutes: HttpRoutes[IO] = {
     val dsl = new Http4sDsl[IO] {}
     import dsl._
     HttpRoutes.of[IO] {

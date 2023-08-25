@@ -4,12 +4,12 @@ import cats.effect.{IO, IOApp, Ref}
 
 object Main extends IOApp.Simple {
 
-  def backendsRef: IO[Ref[IO, Backends]] =
+  private val BackendsRef: IO[Ref[IO, Backends]] =
     Ref.of(Backends("http://localhost:9002/hello", "http://localhost:9003/hello"))
 
-  val run =
+  val run: IO[Unit] =
     for {
-      backends <- backendsRef
+      backends <- BackendsRef
       _ <- LoadbalancerServer.run(backends)
     } yield ()
 }
