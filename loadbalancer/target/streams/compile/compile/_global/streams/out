@@ -1,0 +1,4 @@
+[0m[[0m[31merror[0m] [0m[0m/Users/aghurtchumelia/build-your-own-stuff/loadbalancer/src/main/scala/com/ghurtchu/loadbalancer/LoadbalancerRoutes.scala:20:36: discarded non-Unit value of type String("server is dead")[0m
+[0m[[0m[31merror[0m] [0m[0m            .onError(_ => IO.delay("server is dead"))[0m
+[0m[[0m[31merror[0m] [0m[0m                                   ^[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m
