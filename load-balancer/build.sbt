@@ -3,13 +3,17 @@ organization := "com.ghurtchu"
 
 version := "1.0-SNAPSHOT"
 
-lazy val root = (project in file(".")).enablePlugins(PlayScala)
+val dependencies = Seq(guice, ws, "org.scalatestplus.play" %% "scalatestplus-play" % "5.1.0" % Test)
+
+lazy val root = (project in file("."))
+  .settings(
+    name := "lb",
+    assembly / mainClass := Some("Main"),
+    assembly / assemblyJarName := "lb.jar",
+    libraryDependencies ++= dependencies,
+  ).enablePlugins(PlayScala)
 
 scalaVersion := "2.13.11"
-
-libraryDependencies += guice
-libraryDependencies += ws
-libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "5.1.0" % Test
 
 // Adds additional packages into Twirl
 //TwirlKeys.templateImports += "com.ghurtchu.controllers._"

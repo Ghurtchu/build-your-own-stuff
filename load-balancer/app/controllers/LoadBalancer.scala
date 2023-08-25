@@ -1,17 +1,26 @@
 package controllers
 
+import akka.stream.ConnectionException
 import domain.Servers
+import play.api.PlayException
 
 import javax.inject._
 import play.api.mvc._
 import play.api.libs.ws._
+import play.api.libs.ws.ahc.AhcWSResponse
+
+import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.impl.Promise
+import scala.util.{Failure, Success, Try}
 
 /**
  * This controller creates an `Action` to handle HTTP requests to the
  * application's home page.
  */
 @Singleton
-class Main @Inject()(ws: WSClient, val controllerComponents: ControllerComponents) extends BaseController {
+class LoadBalancer @Inject()(ws: WSClient, val controllerComponents: ControllerComponents) extends BaseController {
+
+  implicit val ec: ExecutionContext = controllerComponents.executionContext
 
   // thread unsafe
   val servers = Servers.from(
@@ -29,18 +38,11 @@ class Main @Inject()(ws: WSClient, val controllerComponents: ControllerComponent
    */
   def index: Action[AnyContent] = Action.async { implicit request: Request[AnyContent] =>
     val url = servers.next
-    println(s"sending request to $url")
-    val req: WSRequest = ws.url(url)
+
+    ws.url(url)
       .withBody(request.body.toString)
-
-    req.execute.map { wsResponse => Ok(wsResponse.body) } (controllerComponents.executionContext)
-  }
-
-  def getNumbers: Action[AnyContent] = Action { _ =>
-    Ok {
-      (1 to 10)
-        .map(_.toString)
-        .reduce(_ concat "\n" concat _)
-    }
+      .execute()
+      .map(resp => Ok(resp.body))
+      .recover { case _ => Ok(s"could not connect to $url") }
   }
 }

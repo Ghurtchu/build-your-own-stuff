@@ -1,7 +1,7 @@
 package domain
 final case class Servers private (private var uris: List[String]) {
 
-  def next: String = {
+  def next: String = this.synchronized {
     val nextUri = uris.head
     uris = uris.tail :+ nextUri
 
