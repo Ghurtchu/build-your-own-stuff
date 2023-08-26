@@ -9,18 +9,18 @@ import org.http4s.server.middleware.Logger
 
 object LoadbalancerServer {
 
-  def run(backends: Ref[IO, Backends]): IO[Unit] = {
+  def run(backends: Ref[IO, Backends], port: Port): IO[Unit] = {
     for {
       client <- EmberClientBuilder.default[IO].build
       httpApp =
           (LoadbalancerRoutes.requestRoutes(backends, client) <+>
-            LoadbalancerRoutes.helloRoutes)
+            LoadbalancerRoutes.helloRoutes(port))
             .orNotFound
       finalHttpApp = Logger.httpApp(logHeaders = true, logBody = true)(httpApp)
       _ <-
         EmberServerBuilder.default[IO]
           .withHost(ipv4"0.0.0.0")
-          .withPort(port"8080")
+          .withPort(port)
           .withHttpApp(finalHttpApp)
           .build
     } yield ()

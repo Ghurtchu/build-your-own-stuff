@@ -8,7 +8,6 @@ lazy val root = (project in file("."))
   .settings(
     organization := "com.ghurtchu",
     name := "loadbalancer",
-    version := "0.0.1-SNAPSHOT",
     scalaVersion := "2.13.11",
     libraryDependencies ++= Seq(
       "org.http4s"      %% "http4s-ember-server" % Http4sVersion,
@@ -26,5 +25,7 @@ lazy val root = (project in file("."))
     assembly / assemblyMergeStrategy := {
       case "module-info.class" => MergeStrategy.discard
       case x => (assembly / assemblyMergeStrategy).value.apply(x)
-    }
+    },
+    assembly / mainClass := Some("Main"),
+    assembly / assemblyJarName := "lb.jar",
   )

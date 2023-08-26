@@ -1,4 +1,4 @@
-[0m[[0m[31merror[0m] [0m[0m/Users/aghurtchumelia/build-your-own-stuff/loadbalancer/src/main/scala/com/ghurtchu/loadbalancer/LoadbalancerRoutes.scala:20:36: discarded non-Unit value of type String("server is dead")[0m
-[0m[[0m[31merror[0m] [0m[0m            .onError(_ => IO.delay("server is dead"))[0m
-[0m[[0m[31merror[0m] [0m[0m                                   ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/aghurtchumelia/build-your-own-stuff/load-balancer/src/main/scala/com/ghurtchu/loadbalancer/LoadbalancerRoutes.scala:21:24: '}' expected but integer literal found.[0m
+[0m[[0m[31merror[0m] [0m[0m          resp <- Ok(a)1[0m
+[0m[[0m[31merror[0m] [0m[0m                       ^[0m
 [0m[[0m[31merror[0m] [0m[0mone error found[0m

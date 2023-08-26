@@ -1,6 +1,7 @@
 package com.ghurtchu.loadbalancer
 
 import cats.effect.{IO, Ref}
+import com.comcast.ip4s.Port
 import org.http4s.{HttpRoutes, Uri}
 import org.http4s.dsl.Http4sDsl
 import org.http4s.client.Client
@@ -13,24 +14,23 @@ object LoadbalancerRoutes {
     HttpRoutes.of[IO] {
       case request @ GET -> Root =>
         for {
-          b <- backends.getAndUpdate(_.next)
-          a <- client.expect[String] {
-            request.withUri(Uri.unsafeFromString(b.current))
+          backend <- backends.getAndUpdate(_.next)
+          current = backend.current
+          uri <- IO.fromOption((Uri fromString current).toOption) {
+            new RuntimeException("Could not construct proper URI")
           }
-            .recover(_ => "server is dead")
-          resp <- Ok(a)
+          response <- client.expect[String](request.withUri(uri))
+            .recover(_ => s"server with uri: $uri is dead")
+          resp <- Ok(response)
         } yield resp
     }
   }
 
-  def helloRoutes: HttpRoutes[IO] = {
+  def helloRoutes(port: Port): HttpRoutes[IO] = {
     val dsl = new Http4sDsl[IO] {}
     import dsl._
     HttpRoutes.of[IO] {
-      case GET -> Root / "hello" =>
-        for {
-          resp <- Ok("hello")
-        } yield resp
+      case GET -> Root / "hello" => Ok(s"Hello from $port")
     }
   }
 
