@@ -14,7 +14,7 @@ object LoadbalancerServer {
       client <- EmberClientBuilder.default[IO].build
       httpApp =
           (LoadbalancerRoutes.requestRoutes(backends, client) <+>
-            LoadbalancerRoutes.helloRoutes(port))
+            LoadbalancerRoutes.helloRoutes(ipv4"0.0.0.0".toString concat "/" concat s"${port.value}"))
             .orNotFound
       finalHttpApp = Logger.httpApp(logHeaders = true, logBody = true)(httpApp)
       _ <-

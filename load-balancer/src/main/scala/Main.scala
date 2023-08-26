@@ -9,7 +9,7 @@ import scala.util.Try
 object Main extends IOApp {
 
   private val BackendsRef: IO[Ref[IO, Backends]] =
-    Ref.of(Backends("http://localhost:9002/hello", "http://localhost:9003/hello"))
+    Ref.of(Backends("http://localhost:8081/hello", "http://localhost:8082/hello"))
 
   override def run(args: List[String]): IO[ExitCode] =
     (for {

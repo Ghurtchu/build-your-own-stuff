@@ -1,7 +1,6 @@
 package com.ghurtchu.loadbalancer
 
 import cats.effect.{IO, Ref}
-import com.comcast.ip4s.Port
 import org.http4s.{HttpRoutes, Uri}
 import org.http4s.dsl.Http4sDsl
 import org.http4s.client.Client
@@ -26,11 +25,11 @@ object LoadbalancerRoutes {
     }
   }
 
-  def helloRoutes(port: Port): HttpRoutes[IO] = {
+  def helloRoutes(uri: String): HttpRoutes[IO] = {
     val dsl = new Http4sDsl[IO] {}
     import dsl._
     HttpRoutes.of[IO] {
-      case GET -> Root / "hello" => Ok(s"Hello from $port")
+      case GET -> Root / "hello" => Ok(s"Hello from $uri")
     }
   }
 
